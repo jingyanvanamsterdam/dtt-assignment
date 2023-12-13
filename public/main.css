@@ -1,0 +1,109 @@
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+}
+
+nav {
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  background-color: #FFFFFF;
+}
+
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
+}
+
+/* below is the css for dtt*/
+
+html {
+    height: 100%;
+  }
+
+
+.logo {
+    height: auto;
+    width: 30%;
+}
+
+.body-container {
+    margin: 20px;
+}
+
+.sorting {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.title {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.items-container {
+    margin: 20px; 
+}
+
+.item {
+    display: flex; 
+    align-items: flex-start;
+    margin: 20px, 0;
+}
+
+.item-img {
+    width: 100px;
+    height: 100px; 
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+    margin-left: 0px; 
+    margin-right: 10px;
+    
+}
+
+.item-info {
+    flex: 2;
+    height: auto;  
+}
+
+.item-edits {
+    display: flex;
+    flex: 1;
+    margin-left: auto;
+    justify-content: end;
+}
+
+
+.item-info h5, p {
+    margin: 5px;
+    padding: auto;
+    font-size: 15px;
+}
+
+
+.item-info-bbg {
+    display: flex; 
+}
+
+.img-small {
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+; 
+}
+
+.item-info-bbg-bed, .item-info-bbg-bath, .item-info-bbg-size {
+    display: flex; 
+    align-items: center;
+    margin-right: 10px;
+}
+
