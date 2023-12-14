@@ -1,24 +1,46 @@
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Montserrat', 'Open Sans',sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
 }
+body {
+    margin: 0px;
+}
+.navbar-default { margin : 0 !important; }
 
 nav {
   padding: 30px;
   display: flex;
   align-items: center;
+  justify-content: left;
   background-color: #FFFFFF;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+nav a p{
+  font-weight: medium;
+  color: #C3C3C3;
+  font-size: 18px;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+nav a.router-link-exact-active p{
+  font-weight: bold; 
+  color: #000000;
+  font-size: 18px; 
+  
+}
+
+.nav-home {
+    margin-right: 5%;
+}
+
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.container {
+    background-color: #F6F6F6;
 }
 
 /* below is the css for dtt*/
@@ -30,33 +52,38 @@ html {
 
 .logo {
     height: auto;
-    width: 30%;
+    width: 10%;
+    margin-right: 5%;
 }
 
 .body-container {
-    margin: 20px;
+    margin: auto;
+    max-width: 1170px;
+    
 }
 
 .sorting {
     display: flex;
     justify-content: space-between;
-    margin: 20px;
+    padding: 30px;
 }
 
 .title {
     display: flex;
     justify-content: space-between;
-    margin: 20px;
+    padding: 30px;
 }
 
 .items-container {
-    margin: 20px; 
+    padding: 30px; 
 }
 
+.items {
+    padding: 20px 0px;
+}
 .item {
     display: flex; 
     align-items: flex-start;
-    margin: 20px, 0;
 }
 
 .item-img {
@@ -106,4 +133,3 @@ html {
     align-items: center;
     margin-right: 10px;
 }
-
