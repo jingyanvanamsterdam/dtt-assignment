@@ -1,5 +1,4 @@
-{
-   "houses": [
+[
     {
        "id":2,
        "image":"https:\/\/api.intern.d-tt.nl\/uploads\/house1.jpg",
@@ -242,4 +241,4 @@
        "hasGarage":false,
        "madeByMe":true
     }
- ]}
+ ]

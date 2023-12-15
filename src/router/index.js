@@ -19,7 +19,12 @@ const routes = [
     path: "/house-details/:id", 
     name: "house-details", 
     component: ()=> import("../views/HouseDetail.vue"),
-  }
+  },
+  {
+    path:"/create-new-listing",
+    name: "create-new-listing", 
+    component: ()=> import("../views/CreateView.vue")
+  },
 ];
 
 const router = createRouter({

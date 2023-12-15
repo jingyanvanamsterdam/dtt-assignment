@@ -2,14 +2,17 @@
       <div class="body-container">
         <div class="title">
           <span>House</span>
-          <button type="button">+ Create New</button>      
+          <router-link to="/create-new-listing">
+            <button type="button">+ Create New</button>
+          </router-link>    
         </div>
 
         <div class="sorting">
           <input type="text" placeholder="Search...">
           <div>
-            <button>Price Filter</button>
-            <button>Size Filter</button>
+            <!--define the price and size filter in the script-->
+            <button @click="priceFilter">Price Filter</button>
+            <button @click="sizeFilter">Size Filter</button>
           </div>
         </div>
 
@@ -44,7 +47,7 @@
                     <button>delete</button>
                 </div>
               </div>
-            </router-link>
+            </router-link> 
           </div>
         </div>
       </div>
@@ -52,16 +55,15 @@
 
 <script>
 // @ is an alias to /src
-//import HelloWorld from "@/components/HelloWorld.vue";
-import houses from "@/houses.json"
+//import { useHouseStore } from '@/stores/houses';
+//const housesStore = useHouseStore();
+
 
 export default {
   name: "HomeView",
-  components: {
-  },
-  data(){
-    return {
-      houses: houses.houses
+  computed: {
+    houses() {
+      return this.$store.state.houses
     }
   }
 };

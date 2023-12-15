@@ -73,7 +73,6 @@
 </template>
 
 <script>
-import houses from "@/houses.json"; 
 
 export default {
     name: "HouseDetail", 
@@ -85,7 +84,8 @@ export default {
             return parseInt(this.$route.params.id)
         }, 
         house(){
-            return houses.houses.find(house => house.id === this.houseId)
+            const houses= this.$store.state.houses
+            return houses.find(house => house.id === this.houseId)
         }
     }
 }
