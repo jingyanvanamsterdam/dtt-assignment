@@ -11,8 +11,8 @@
           <input type="text" placeholder="Search...">
           <div>
             <!--define the price and size filter in the script-->
-            <button @click="priceFilter">Price Filter</button>
-            <button @click="sizeFilter">Size Filter</button>
+            <button @click="sortByPrice">Price</button>
+            <button @click="sortBySize">Size</button>
           </div>
         </div>
 
@@ -54,13 +54,19 @@
 </template>
 
 <script>
-// @ is an alias to /src
-//import { useHouseStore } from '@/stores/houses';
-//const housesStore = useHouseStore();
-
 
 export default {
   name: "HomeView",
+
+  methods: {
+    sortByPrice(){
+      this.$store.commit("sortByPrice")
+    }, 
+    sortBySize(){
+      this.$store.commit("sortBySize")
+    }
+  }, 
+  
   computed: {
     houses() {
       return this.$store.state.houses
