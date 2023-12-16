@@ -8,13 +8,13 @@
         </div>
 
         <div class="sorting">
-          <input type="text" placeholder="Search...">
+          <input type="search" placeholder="Search for a house" v-model="searchInput">
           <div>
-            <!--define the price and size filter in the script-->
             <button @click="sortByPrice">Price</button>
             <button @click="sortBySize">Size</button>
           </div>
         </div>
+        <div v-show="this.searchInput.length > 0"> {{ searchResult }} </div>
 
         <!--This is houses container-->
         <div class="items-container">
@@ -57,19 +57,39 @@
 
 export default {
   name: "HomeView",
-
+  data() {
+    return {
+      searchInput: ""
+    }
+    
+  },
   methods: {
     sortByPrice(){
       this.$store.commit("sortByPrice")
     }, 
     sortBySize(){
       this.$store.commit("sortBySize")
-    }
+    }, 
+
   }, 
   
   computed: {
     houses() {
-      return this.$store.state.houses
+      if(this.searchInput === ""){
+        return this.$store.state.houses
+      } else {
+        return this.$store.state.houses.filter((house) => {
+          return (
+          house.location.street.toLowerCase().includes(this.searchInput.toLowerCase()) || 
+          house.location.city.toLowerCase().includes(this.searchInput.toLowerCase()) ||
+          house.location.zip.toString().includes(this.searchInput.toLowerCase()) ||
+          house.description.toLowerCase().includes(this.searchInput.toLowerCase())
+          ) 
+      });
+      }
+    },
+    searchResult(){
+      return this.houses.length === 1 ? " 1 result found " : `${this.houses.length} results found`  
     }
   }
 };
