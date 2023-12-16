@@ -1,52 +1,50 @@
 <template>
     <div class="create">
-        <router-link to="/">
-            <div class="hd-heading">
-                <img src="../../public/images/ic_back_grey@3x.png">
-                <p>Back to overview</p>
-            </div>
-        </router-link>
+       <div class="hd-heading" @click="goBack">
+            <img src="../../public/images/ic_back_grey@3x.png">
+            <p>Back to overview</p>
+        </div>
 
         <h3>Create new listing</h3>
-        <form @submit="handlePost">
+        <form @submit.prevent="handlePost">
             <div class="street">
                 <label for="street name">Street name</label>
-                <input type="text" size="15" v-model="houseData.location.street"  required />
+                <input id="street name" type="text" size="15" v-model="houseData.location.street"  required />
             </div>
             <div class="houseNum"></div>
                 <div>
-                    <label>House number</label>
-                    <input type="text" size="10" v-model="houseData.location.houseNumber"  required />
+                    <label for="house number">House number</label>
+                    <input id="house number" type="text" size="10" v-model="houseData.location.houseNumber"  required />
                 </div>
                 <div>
-                    <label>Addition (optional)</label>
-                    <input type="text" size="10" v-model="houseData.location.houseNumberAddition" />
+                    <label for="house addition">Addition (optional)</label>
+                    <input id="house addition" type="text" size="10" v-model="houseData.location.houseNumberAddition" />
                 </div>
             <div class="zip">
-                <label>Postal code</label>
-                <input type="text" size="15" v-model="houseData.location.zip"  required/>
+                <label for="zip">Postal code</label>
+                <input id="zip" type="text" size="15" v-model="houseData.location.zip"  required/>
             </div>
             <div class="city">
-                <label>City</label>
-                <input type="text" size="15" v-model="houseData.location.city"  required />
+                <label for="city">City</label>
+                <input id="city" type="text" size="15" v-model="houseData.location.city"  required />
             </div>
             <!--Check how to input an image as an url-->
             <div class="upload-img">
-                <label>Upload picture (PNG or JPG)</label>
-                <input type="file"  required/>
+                <label for="image">Upload picture (PNG or JPG)</label>
+                <input id="image" type="file" @change="updateImage" />
             </div>
             <div class="price">
-                <label>Price</label>
-                <input type="number" v-model="houseData.price"  required />
+                <label for="price">Price</label>
+                <input id="price" type="number" v-model="houseData.price"  required />
             </div>
             <div class="size-garage">
                 <div class="size">
-                    <label>Size</label>
-                    <input type="number" v-model="houseData.size"  required/>
+                    <label for="size">Size</label>
+                    <input id="size" type="number" v-model="houseData.size"  required/>
                 </div>
                 <div class="garage">
-                    <label>Garage</label>
-                    <select v-model="houseData.hasGarage"  required>
+                    <label for="garage">Garage</label>
+                    <select id="garage" v-model="houseData.hasGarage"  required>
                         <option value="true">Yes</option>
                         <option value="false">No</option>
                     </select>
@@ -54,26 +52,26 @@
             </div>
             <div class="bed-bath">
                 <div class="bedroom">
-                    <label>Bedrooms</label>
-                    <input type="number" v-model="houseData.rooms.bedrooms"  required />
+                    <label for="bedroom">Bedrooms</label>
+                    <input id="bedroom" type="number" v-model="houseData.rooms.bedrooms"  required />
                 </div>
                 <div class="bathroom">
-                    <label>Bathrooms</label>
-                    <input type="number" v-model="houseData.rooms.bathrooms"  required/>
+                    <label for="bathroom">Bathrooms</label>
+                    <input id="bathroom" type="number" v-model="houseData.rooms.bathrooms"  required/>
                 </div>
             </div>
-            <div class="construction-date">
-                <label>Construction date</label>
-                <input type="date" v-model="houseData.constructionYear"  required/>
+            <div class="construction-year">
+                <label for="constructionyear">Construction year</label>
+                <input id="constructionyear" type="number" v-model="houseData.constructionYear"  required/>
             </div>
             <div class="description">
-                <label>Description</label>
-                <input type="text" v-model="houseData.description"  required/>
+                <label for="description">Description</label>
+                <input id="description"  type="text" v-model="houseData.description"  required/>
             </div>
-            <input />
             <div class="submit">
-                <input type="submit" value="Post" />
+                <button type="submit">Post</button>
             </div>
+    
         </form>
     </div>
 </template>
@@ -81,10 +79,13 @@
 <script>
 
 export default {
-    data() {
-        return {
-            houseData: {
-                id: "generate a number to replace",
+    computed: {
+        newId(){
+            return this.$store.getters.getNewId
+        }, 
+        houseData() {
+            return {
+                id: this.newId,
                 image: "",
                 price:"",
                 rooms:{
@@ -100,21 +101,27 @@ export default {
                     city:"",
                     zip:""
                 },
-                createdAt:"generate a date function to replace",
+                createdAt: new Date().toISOString().split('T')[0],
                 constructionYear:"",
                 hasGarage:false,
                 madeByMe:true,
             }
         }
-        
     },
    
     methods: {
+        updateImage(e){
+            this.houseData.image = e.target.value
+        },
+        goBack(e){
+            this.$router.back()
+        },
         handlePost(e){
-            console.log(this.houseData)
             //Validation
+            const id = this.houseData.id //prevent rerender interrupting router
             this.$store.commit("createNewListing", this.houseData)
-            //v-model needs to take a value from here to understand how it is connected with the store, instead of what I have now locally.
+            console.log(id, this.houseData.id)
+            this.$router.push(`/house-details/${id}`)
         }
     }
 }

@@ -13,8 +13,10 @@
                 <img :src="house.image">
                 <div class="hd-contents-details-heading">
                     <p>{{ house.location.street }} {{ house.location.houseNumber }}</p>
-                    <div class="hd-contents-details-edits">
-                        <button>edit</button>
+                    <div class="hd-contents-details-edits" v-show="house.madeByMe">
+                        <router-link :to="`/edit-my-house/${house.id}`">
+                            <button>edit</button>
+                        </router-link>
                         <button>delete</button>
                     </div>
                 </div>
