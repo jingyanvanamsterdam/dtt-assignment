@@ -42,13 +42,15 @@ export const useHouseStore = createStore({
     },
     actions: {
 
-        fetchHouses({commit}){
-            HTTP.get("houses").then(response => {
-                console.log(response.data); 
-                commit('setHouses', response.data)
-             }).catch((error) =>{
-                console.log('error', error)
-            })
+        fetchHouses({commit, state}){
+            if(state.houses.length === 0){
+                HTTP.get("houses").then(response => {
+                    console.log(response.data); 
+                    commit('setHouses', response.data)
+                }).catch((error) =>{
+                    console.log('error', error)
+                })
+            }
         },
 
         async createNewHouse({commit}, {houseData, imageFile}){

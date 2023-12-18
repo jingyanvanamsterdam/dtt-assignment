@@ -1,5 +1,5 @@
 <template>
-    <div class="create">
+    <div v-if="house" class="create">
         <router-link :to="`/house-details/${house.id}`">
             <div class="hd-heading">
                 <img src="../../public/images/ic_back_grey@3x.png">
@@ -8,7 +8,7 @@
         </router-link>
 
         <h3>Edit listing</h3>
-        <Form @submit="handlePost"  :validation-schema="schema" v-slot="{ errors }">
+        <Form  @submit="handlePost"  :validation-schema="schema" v-slot="{ errors }">
             <div class="street">
                 <label for="street name">Street name</label>
                 <Field name="streetName" type="text" v-model="houseData.location.street" :class="{'is-invalid': errors.streetName }"/>
@@ -127,7 +127,8 @@ export default {
         }, 
         house(){
             const houses= this.$store.state.houses
-            return houses.find(house => house.id === this.houseId)
+            const theHouse =  houses.find(house => house.id === this.houseId)
+            return theHouse ? theHouse : null
         },
         
         houseData() {
@@ -156,6 +157,10 @@ export default {
         }, 
 
 
+    },
+
+    created() {
+        this.$store.dispatch('fetchHouses');
     },
    
     methods: {

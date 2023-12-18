@@ -8,7 +8,7 @@
             </div>
         </router-link>
         
-        <div class="hd-contents">
+        <div v-if="house" class="hd-contents">
             <div class="hd-contents-details">
                 <img :src="house.image">
                 <div class="hd-contents-details-heading">
@@ -72,16 +72,14 @@ export default {
         }, 
         house(){
             const houses= this.$store.state.houses
-            return houses.find(house => house.id === this.houseId)
+            const ahouse =  houses.find(house => house.id === this.houseId)
+            return ahouse ? ahouse : null
         }
+    }, 
+    created() {
+        this.$store.dispatch('fetchHouses');
     },
     methods: {
-        toggleDelete(e){
-            if(this.deleteInforming && e.target.id==="deleteButton"){
-                return
-            } 
-            this.deleteInforming = !this.deleteInforming
-        },
         handleDelete(itemId){
             this.showModal = false
             this.$store.dispatch("deleteHouse", itemId)
