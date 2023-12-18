@@ -6,107 +6,127 @@
         </div>
 
         <h3>Create new listing</h3>
-        <form @submit.prevent="handlePost">
+        <Form @submit="handlePost"  :validation-schema="schema" v-slot="{ errors }">
             <div class="street">
-                <label for="street name">Street name</label>
-                <input id="street name" type="text" size="15" v-model="houseData.location.street"  required />
+                <label for="street">Street name</label>
+                <Field name="street" type="text" :class="{'is-invalid': errors.street }"/>
+                <ErrorMessage name="street"/>
             </div>
             <div class="houseNum"></div>
                 <div>
                     <label for="house number">House number</label>
-                    <input id="house number" type="text" size="10" v-model="houseData.location.houseNumber"  required />
+                    <Field name="houseNumber" type="number" size="10" :class="{'is-invalid': errors.houseNumber }"/>
+                    <ErrorMessage name="houseNumber" />
+                    
                 </div>
                 <div>
                     <label for="house addition">Addition (optional)</label>
-                    <input id="house addition" type="text" size="10" v-model="houseData.location.houseNumberAddition" />
+                    <Field name="houseNumberAddition" type="text" size="10" />
                 </div>
             <div class="zip">
-                <label for="zip">Postal code</label>
-                <input id="zip" type="text" size="15" v-model="houseData.location.zip"  required/>
+                <label>Postal code</label>
+                <Field name="zip" type="text" size="15" :class="{'is-invalid': errors.zip }"/>
+                <ErrorMessage name="zip" />
             </div>
             <div class="city">
                 <label for="city">City</label>
-                <input id="city" type="text" size="15" v-model="houseData.location.city"  required />
+                <Field name="city" type="text" size="15" :class="{'is-invalid': errors.city }"/>
+                <ErrorMessage name="city" />
             </div>
-            <!--Check how to input an image as an url-->
+            <!--Check how to input an image as an url
             <div class="upload-img">
                 <label for="image">Upload picture (PNG or JPG)</label>
-                <input id="image" type="file" @change="updateImage" />
-            </div>
+                <Field name="image" type="file" @change="updateImage" />
+            </div> -->
             <div class="price">
                 <label for="price">Price</label>
-                <input id="price" type="number" v-model="houseData.price"  required />
+                <Field name="price" type="number" :class="{'is-invalid': errors.price }"/>
+                <ErrorMessage name="price" />
             </div>
             <div class="size-garage">
                 <div class="size">
                     <label for="size">Size</label>
-                    <input id="size" type="number" v-model="houseData.size"  required/>
+                    <Field name="size" type="number" :class="{'is-invalid': errors.size }"/>
+                    <ErrorMessage name="size" />
                 </div>
                 <div class="garage">
                     <label for="garage">Garage</label>
-                    <select id="garage" v-model="houseData.hasGarage"  required>
+                    <Field as="select" name="hasGarage" :class="{'is-invalid': errors.hasGarage }">
                         <option value="true">Yes</option>
                         <option value="false">No</option>
-                    </select>
+                    </Field>
+                    <ErrorMessage name="hasGarage" />
                 </div>
             </div>
             <div class="bed-bath">
                 <div class="bedroom">
                     <label for="bedroom">Bedrooms</label>
-                    <input id="bedroom" type="number" v-model="houseData.rooms.bedrooms"  required />
+                    <Field name="bedrooms" type="number" :class="{'is-invalid': errors.bedrooms }"/>
+                    <ErrorMessage name="bedrooms" />
                 </div>
                 <div class="bathroom">
                     <label for="bathroom">Bathrooms</label>
-                    <input id="bathroom" type="number" v-model="houseData.rooms.bathrooms"  required/>
+                    <Field name="bathrooms" type="number" :class="{'is-invalid': errors.bathrooms }"/>
+                    <ErrorMessage name="bathrooms" />
                 </div>
             </div>
             <div class="construction-year">
-                <label for="constructionyear">Construction year</label>
-                <input id="constructionyear" type="number" v-model="houseData.constructionYear"  required/>
+                <label for="constructionYear">Construction year</label>
+                <Field name="constructionYear" type="number" :class="{'is-invalid': errors.constructionYear }"/>
+                <ErrorMessage name="constructionYear" />
             </div>
             <div class="description">
                 <label for="description">Description</label>
-                <input id="description"  type="text" v-model="houseData.description"  required/>
+                <Field name="description"  type="text" :class="{'is-invalid': errors.description }" />
+                <ErrorMessage name="description" />
             </div>
             <div class="submit">
                 <button type="submit">Post</button>
             </div>
     
-        </form>
+        </Form>
     </div>
 </template>
 
 <script>
+import { Form, Field, ErrorMessage } from "vee-validate"; 
+import * as Yup from 'yup';
 
 export default {
+    data(){
+        const schema = Yup.object().shape({
+            //image: "",
+            price: Yup.number("Price should be a number").positive("Price should be a positive number").required('Price is required.'),
+            bedrooms: Yup.number('The number of bedrooms should be a number.').positive("The number of bedrooms should be a positive number").required('The number of bedrooms is required. '),
+            bathrooms: Yup.number('The number of bathrooms should be a number.').positive("The number of bathrooms should be a positive number").required('The number of bathrooms is required. '),
+            size: Yup.number('The size of the house should be a number.').positive('The number of size should be a positive number.').required('Size is required.'),
+            description: Yup.string().required('Description of the house is required.'),
+            street: Yup.string().required('Street name is required.'),
+            houseNumber: Yup.number("House number should be a number").positive("House number should be a positive number").required('House number is required.'),
+            houseNumberAddition: Yup.string(),
+            city: Yup.string().required('City is required.'),
+            zip: Yup.string().required('Postal code is required')
+                .matches(/[0-9]{4}\s?[A-Z]{2}/, "Postal code must be 4 digits with two uppercase letters"),
+            constructionYear: Yup.number().required()
+                .min(1000, "Construction year must be a valid year.").max(2023, "Construction year must be a valid year."),
+            hasGarage: Yup.boolean().required('Please inform whether the house has a garage or not.'),
+        }); 
+        return {
+            schema,
+            id: this.newId,
+            createdAt: new Date().toISOString().split('T')[0],
+            madeByMe: true,
+        }
+    },
+    components: {
+        Form, 
+        Field,
+        ErrorMessage
+    },
     computed: {
         newId(){
             return this.$store.getters.getNewId
         }, 
-        houseData() {
-            return {
-                id: this.newId,
-                image: "",
-                price:"",
-                rooms:{
-                    bedrooms:"",
-                    bathrooms:""
-                },
-                size:"",
-                description:"",
-                location:{
-                    street:"",
-                    houseNumber:"",
-                    houseNumberAddition:"",
-                    city:"",
-                    zip:""
-                },
-                createdAt: new Date().toISOString().split('T')[0],
-                constructionYear:"",
-                hasGarage:false,
-                madeByMe:true,
-            }
-        }
     },
    
     methods: {
@@ -116,11 +136,34 @@ export default {
         goBack(e){
             this.$router.back()
         },
-        handlePost(e){
-            //Validation
-            const id = this.houseData.id //prevent rerender interrupting router
-            this.$store.commit("createNewListing", this.houseData)
-            console.log(id, this.houseData.id)
+        handlePost(values){
+            const newHouse = {
+                id: this.newId,
+                //image: "",
+                price: values.price,
+                rooms:{
+                    bedrooms: values.bedrooms,
+                    bathrooms: values.bathrooms,
+                },
+                size: values.size,
+                description: values.description,
+                location:{
+                    street: values.street,
+                    houseNumber: values.houseNumber,
+                    houseNumberAddition: values.houseNumberAddition,
+                    city: values.city,
+                    zip: values.zip,
+                },
+                createdAt: new Date().toISOString().split('T')[0],
+                constructionYear: values.constructionYear,
+                hasGarage: values.hasGarage,
+                madeByMe: true,
+            }
+                        
+            const id = newHouse.id //prevent rerender interrupting router
+            
+            this.$store.commit("createNewListing", newHouse)
+
             this.$router.push(`/house-details/${id}`)
         }
     }
@@ -134,6 +177,10 @@ form {
     text-align: left;
     padding: 40px; 
     border-radius: 10px;
+}
+
+.is-invalid {
+    border-color: red;
 }
 
 label {

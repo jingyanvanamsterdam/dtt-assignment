@@ -17,7 +17,12 @@
                         <router-link :to="`/edit-my-house/${house.id}`">
                             <button>edit</button>
                         </router-link>
-                        <button>delete</button>
+                        <button id="deleteButton" @click="toggleDelete">delete</button>
+                        <div class="deleteInforming" v-show="this.deleteInforming">
+                            <p>Are you sure you want to delete this item from the list?</p>
+                            <button :id="`${house.id}`" @click="handleDelete"> Yes </button>
+                            <button id="backButton" @click="toggleDelete"> Back</button>
+                        </div>
                     </div>
                 </div>
                 <div class="hd-contents-details-info">
@@ -45,30 +50,6 @@
                 </div>
                 <p>{{ house.description }}</p>
             </div>
-
-            <div class="hd-contents-recommendation">
-                <h6>Recommendation</h6>
-                <!-- ADD this later
-                <div class="recommendation-items">
-                    <div class="recommendation-item">
-                        <img>
-                        <div class="item-info">
-                            <h5>street name</h5>
-                            <p>price</p>
-                            <p>location</p>
-                            <div class="item-info-bbg">
-                                <img class="img-small" src="../../public/images/ic_bed@3x.png"/>
-                                <p>item.rooms.bedrooms</p>
-                                <img class="img-small" src="../../public/images/ic_bath@3x.png" />
-                                <p>item.rooms.bathrooms</p>
-                                <img class="img-small" src="../../public/images/ic_size@3x.png" />
-                                <p>item.size m2</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                -->
-            </div>
         </div>
     </div>
 
@@ -81,6 +62,11 @@ export default {
     components: {
 
     }, 
+    data(){
+        return {
+            deleteInforming: false,
+        }
+    },
     computed: {
         houseId(){
             return parseInt(this.$route.params.id)
@@ -89,6 +75,18 @@ export default {
             const houses= this.$store.state.houses
             return houses.find(house => house.id === this.houseId)
         }
+    },
+    methods: {
+        toggleDelete(e){
+            if(this.deleteInforming && e.target.id==="deleteButton"){
+                return
+            } 
+            this.deleteInforming = !this.deleteInforming
+        },
+        handleDelete(e){
+            const numberId = parseInt(e.target.id)
+            this.$store.commit("deleteListing", numberId); 
+    },
     }
 }
 </script>

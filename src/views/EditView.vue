@@ -8,78 +8,122 @@
         </router-link>
 
         <h3>Edit listing</h3>
-        <form @submit.prevent="handlePost">
+        <Form @submit="handlePost"  :validation-schema="schema" v-slot="{ errors }">
             <div class="street">
                 <label for="street name">Street name</label>
-                <input type="text" size="15" v-model="houseData.location.street"  required />
+                <Field name="street" type="text" v-model="houseData.location.street" :class="{'is-invalid': errors.street }"/>
+                <ErrorMessage name="street"/>
             </div>
             <div class="houseNum"></div>
                 <div>
                     <label>House number</label>
-                    <input type="text" size="10" v-model="houseData.location.houseNumber"  required />
+                    <Field name="houseNumber" type="number" size="10" v-model="houseData.location.houseNumber" :class="{'is-invalid': errors.houseNumber }"/>
+                    <ErrorMessage name="houseNumber" />
                 </div>
                 <div>
                     <label>Addition (optional)</label>
-                    <input type="text" size="10" v-model="houseData.location.houseNumberAddition" />
+                    <Field name="houseNumberAddition" type="text" size="10" v-model="houseData.location.houseNumberAddition" />
                 </div>
             <div class="zip">
                 <label>Postal code</label>
-                <input type="text" size="15" v-model="houseData.location.zip"  required/>
+                <Field name="zip" type="text" size="15" v-model="houseData.location.zip" :class="{'is-invalid': errors.zip }"/>
+                <ErrorMessage name="zip" />
             </div>
             <div class="city">
                 <label>City</label>
-                <input type="text" size="15" v-model="houseData.location.city"  required />
+                <Field name="city" type="text" size="15" v-model="houseData.location.city" :class="{'is-invalid': errors.city }"/>
+                <ErrorMessage name="city" />
+                <input type="text" size="15"   required />
             </div>
-          
+          <!--
             <div class="upload-img">
                 <label>Upload picture (PNG or JPG)</label>
                 <input type="file" />
             </div>
+            -->
             <div class="price">
                 <label>Price</label>
-                <input type="number" v-model="houseData.price"  required />
+                <Field name="price" type="number" v-model="houseData.price" :class="{'is-invalid': errors.price }"/>
+                <ErrorMessage name="price" />
             </div>
             <div class="size-garage">
                 <div class="size">
                     <label>Size</label>
-                    <input type="number" v-model="houseData.size"  required/>
+                    <Field name="size" type="number" v-model="houseData.size" :class="{'is-invalid': errors.size }"/>
+                    <ErrorMessage name="size" />
                 </div>
                 <div class="garage">
                     <label>Garage</label>
-                    <select v-model="houseData.hasGarage"  required>
+                    <Field as="select" name="hasGarage" v-model="houseData.hasGarage" :class="{'is-invalid': errors.hasGarage }">
                         <option value="true">Yes</option>
                         <option value="false">No</option>
-                    </select>
+                    </Field>
+                    <ErrorMessage name="hasGarage" />
                 </div>
             </div>
             <div class="bed-bath">
                 <div class="bedroom">
                     <label>Bedrooms</label>
-                    <input type="number" v-model="houseData.rooms.bedrooms"  required />
+                    <Field name="bedrooms" type="number" v-model="houseData.rooms.bedrooms" :class="{'is-invalid': errors.bedrooms }"/>
+                    <ErrorMessage name="bedrooms" />
                 </div>
                 <div class="bathroom">
                     <label>Bathrooms</label>
-                    <input type="number" v-model="houseData.rooms.bathrooms"  required/>
+                    <Field name="bathrooms" type="number" v-model="houseData.rooms.bathrooms" :class="{'is-invalid': errors.bathrooms }"/>
+                    <ErrorMessage name="bathrooms" />
                 </div>
             </div>
             <div class="construction-year">
                 <label>Construction year</label>
-                <input type="number" v-model="houseData.constructionYear"  required/>
+                <Field name="constructionYear" type="number" v-model="houseData.constructionYear" :class="{'is-invalid': errors.constructionYear }"/>
+                <ErrorMessage name="constructionYear" />
             </div>
             <div class="description">
                 <label>Description</label>
-                <input type="text" v-model="houseData.description"  required/>
+                <Field name="description"  type="text" v-model="houseData.description" :class="{'is-invalid': errors.description }" />
+                <ErrorMessage name="description" />
             </div>
             <div class="submit">
                 <input type="submit" value="Post" />
             </div>
-        </form>
+        </Form>
     </div>
 </template>
 
 <script>
+import { Form, Field, ErrorMessage } from "vee-validate"; 
+import * as Yup from 'yup';
 
 export default {
+    data(){
+        const schema = Yup.object().shape({
+            //image: "",
+            price: Yup.number("Price should be a number").positive("Price should be a positive number").required('Price is required.'),
+            bedrooms: Yup.number('The number of bedrooms should be a number.').positive("The number of bedrooms should be a positive number").required('The number of bedrooms is required. '),
+            bathrooms: Yup.number('The number of bathrooms should be a number.').positive("The number of bathrooms should be a positive number").required('The number of bathrooms is required. '),
+            size: Yup.number('The size of the house should be a number.').positive('The number of size should be a positive number.').required('Size is required.'),
+            description: Yup.string().required('Description of the house is required.'),
+            street: Yup.string().required('Street name is required.'),
+            houseNumber: Yup.number("House number should be a number").positive("House number should be a positive number").required('House number is required.'),
+            houseNumberAddition: Yup.string(),
+            city: Yup.string().required('City is required.'),
+            zip: Yup.string().required('Postal code is required')
+                .matches(/[0-9]{4}\s?[A-Z]{2}/, "Postal code must be 4 digits with two uppercase letters"),
+            constructionYear: Yup.number().required()
+                .min(1000, "Construction year must be a valid year.").max(2023, "Construction year must be a valid year."),
+            hasGarage: Yup.boolean().required('Please inform whether the house has a garage or not.'),
+        }); 
+        return {
+            schema,
+        }
+    },
+
+    components:{
+        Form, 
+        Field,
+        ErrorMessage
+    },
+    
     computed: {
         houseId(){
             return parseInt(this.$route.params.id)
@@ -112,14 +156,37 @@ export default {
                 hasGarage:this.house.hasGarage,
                 madeByMe:this.house.madeByMe,
             }
-        }
+        }, 
+
+
     },
    
     methods: {
-        handlePost(e){
-            //Validation
-            console.log(this.houseData)
-            this.$store.commit("editListing", this.houseData)
+        handlePost(values){
+            const newHouse = {
+                id: this.houseData.id,
+                //image: "",
+                price: values.price,
+                rooms:{
+                    bedrooms: values.bedrooms,
+                    bathrooms: values.bathrooms,
+                },
+                size: values.size,
+                description: values.description,
+                location:{
+                    street: values.street,
+                    houseNumber: values.houseNumber,
+                    houseNumberAddition: values.houseNumberAddition,
+                    city: values.city,
+                    zip: values.zip,
+                },
+                createdAt: this.houseData.createdAt,
+                constructionYear: values.constructionYear,
+                hasGarage: values.hasGarage,
+                madeByMe: true,
+            }
+
+            this.$store.commit("editListing", newHouse)
             this.$router.replace(`/house-details/${this.house.id}`)
         },
     }

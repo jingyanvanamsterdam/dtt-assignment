@@ -47,7 +47,8 @@
                   <router-link :to="`/edit-my-house/${item.id}`">
                     <button>edit</button>
                   </router-link>
-                    <button>delete</button>
+                    <button @click="showModal = true">delete</button>
+                    <DeleteModal  :isVisible="showModal" @confirm="(e) => handleDelete(item.id, e)" @cancel="showModal = false" />
                 </div>
               </div>
             
@@ -57,12 +58,17 @@
 </template>
 
 <script>
+import DeleteModal from "../components/DeleteModal.vue";
 
 export default {
   name: "HomeView",
+  components: {
+    DeleteModal
+  }, 
   data() {
     return {
-      searchInput: ""
+      searchInput: "",
+      showModal: false,
     }
     
   },
@@ -73,7 +79,17 @@ export default {
     sortBySize(){
       this.$store.commit("sortBySize")
     }, 
-
+    toggleDelete(e){
+      console.log(e.target.id)
+      if (this.deleteInforming && e.target.id==="deleteButton"){
+        return
+      } 
+      this.deleteInforming = !this.deleteInforming
+    },
+    
+    handleDelete(itemId, e){
+      this.$store.commit("deleteListing", itemId); 
+    },
   }, 
   
   computed: {
@@ -93,7 +109,7 @@ export default {
     },
     searchResult(){
       return this.houses.length === 1 ? " 1 result found " : `${this.houses.length} results found`  
-    }
+    }, 
   }
 };
 </script>

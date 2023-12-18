@@ -15,6 +15,9 @@ export const useHouseStore = createStore({
         }
     },
     mutations: {
+        deleteListing(state, id){
+            state.houses = state.houses.filter((other_house) => other_house.id !== id)
+        },
         createNewListing(state, house){
             state.houses.push(house)
         }, 
