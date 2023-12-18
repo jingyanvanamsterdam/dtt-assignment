@@ -11,8 +11,8 @@
         <Form @submit="handlePost"  :validation-schema="schema" v-slot="{ errors }">
             <div class="street">
                 <label for="street name">Street name</label>
-                <Field name="street" type="text" v-model="houseData.location.street" :class="{'is-invalid': errors.street }"/>
-                <ErrorMessage name="street"/>
+                <Field name="streetName" type="text" v-model="houseData.location.street" :class="{'is-invalid': errors.streetName }"/>
+                <ErrorMessage name="streetName"/>
             </div>
             <div class="houseNum"></div>
                 <div>
@@ -22,7 +22,7 @@
                 </div>
                 <div>
                     <label>Addition (optional)</label>
-                    <Field name="houseNumberAddition" type="text" size="10" v-model="houseData.location.houseNumberAddition" />
+                    <Field name="numberAddition" type="text" size="10" v-model="houseData.location.houseNumberAddition" />
                 </div>
             <div class="zip">
                 <label>Postal code</label>
@@ -33,14 +33,12 @@
                 <label>City</label>
                 <Field name="city" type="text" size="15" v-model="houseData.location.city" :class="{'is-invalid': errors.city }"/>
                 <ErrorMessage name="city" />
-                <input type="text" size="15"   required />
             </div>
-          <!--
+          
             <div class="upload-img">
-                <label>Upload picture (PNG or JPG)</label>
-                <input type="file" />
+                <label for="image">Upload picture (PNG or JPG)</label>
+                <Field name="image" type="file" v-model="houseData.image" @change="handleFileChange"/>
             </div>
-            -->
             <div class="price">
                 <label>Price</label>
                 <Field name="price" type="number" v-model="houseData.price" :class="{'is-invalid': errors.price }"/>
@@ -97,15 +95,14 @@ import * as Yup from 'yup';
 export default {
     data(){
         const schema = Yup.object().shape({
-            //image: "",
             price: Yup.number("Price should be a number").positive("Price should be a positive number").required('Price is required.'),
             bedrooms: Yup.number('The number of bedrooms should be a number.').positive("The number of bedrooms should be a positive number").required('The number of bedrooms is required. '),
             bathrooms: Yup.number('The number of bathrooms should be a number.').positive("The number of bathrooms should be a positive number").required('The number of bathrooms is required. '),
             size: Yup.number('The size of the house should be a number.').positive('The number of size should be a positive number.').required('Size is required.'),
             description: Yup.string().required('Description of the house is required.'),
-            street: Yup.string().required('Street name is required.'),
+            streetName: Yup.string().required('Street name is required.'),
             houseNumber: Yup.number("House number should be a number").positive("House number should be a positive number").required('House number is required.'),
-            houseNumberAddition: Yup.string(),
+            numberAddition: Yup.string(),
             city: Yup.string().required('City is required.'),
             zip: Yup.string().required('Postal code is required')
                 .matches(/[0-9]{4}\s?[A-Z]{2}/, "Postal code must be 4 digits with two uppercase letters"),
@@ -162,32 +159,11 @@ export default {
     },
    
     methods: {
+        handleFileChange(event){
+            this.selectedFile = event.target.files[0]
+        },
         handlePost(values){
-            const newHouse = {
-                id: this.houseData.id,
-                //image: "",
-                price: values.price,
-                rooms:{
-                    bedrooms: values.bedrooms,
-                    bathrooms: values.bathrooms,
-                },
-                size: values.size,
-                description: values.description,
-                location:{
-                    street: values.street,
-                    houseNumber: values.houseNumber,
-                    houseNumberAddition: values.houseNumberAddition,
-                    city: values.city,
-                    zip: values.zip,
-                },
-                createdAt: this.houseData.createdAt,
-                constructionYear: values.constructionYear,
-                hasGarage: values.hasGarage,
-                madeByMe: true,
-            }
-
-            this.$store.commit("editListing", newHouse)
-            this.$router.replace(`/house-details/${this.house.id}`)
+            this.$store.dispatch("editHouse", {houseData: values, id:this.houseData.id, imageFile: this.selectedFile})
         },
     }
 }

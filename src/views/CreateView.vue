@@ -8,9 +8,9 @@
         <h3>Create new listing</h3>
         <Form @submit="handlePost"  :validation-schema="schema" v-slot="{ errors }">
             <div class="street">
-                <label for="street">Street name</label>
-                <Field name="street" type="text" :class="{'is-invalid': errors.street }"/>
-                <ErrorMessage name="street"/>
+                <label for="streetName">Street name</label>
+                <Field name="streetName" type="text" :class="{'is-invalid': errors.streetName }"/>
+                <ErrorMessage name="streetName"/>
             </div>
             <div class="houseNum"></div>
                 <div>
@@ -21,7 +21,7 @@
                 </div>
                 <div>
                     <label for="house addition">Addition (optional)</label>
-                    <Field name="houseNumberAddition" type="text" size="10" />
+                    <Field name="numberAddition" type="text" size="10" />
                 </div>
             <div class="zip">
                 <label>Postal code</label>
@@ -33,11 +33,11 @@
                 <Field name="city" type="text" size="15" :class="{'is-invalid': errors.city }"/>
                 <ErrorMessage name="city" />
             </div>
-            <!--Check how to input an image as an url
+            
             <div class="upload-img">
                 <label for="image">Upload picture (PNG or JPG)</label>
-                <Field name="image" type="file" @change="updateImage" />
-            </div> -->
+                <Field name="image" type="file" @change="handleFileChange"/>
+            </div>
             <div class="price">
                 <label for="price">Price</label>
                 <Field name="price" type="number" :class="{'is-invalid': errors.price }"/>
@@ -60,12 +60,12 @@
             </div>
             <div class="bed-bath">
                 <div class="bedroom">
-                    <label for="bedroom">Bedrooms</label>
+                    <label for="bedrooms">Bedrooms</label>
                     <Field name="bedrooms" type="number" :class="{'is-invalid': errors.bedrooms }"/>
                     <ErrorMessage name="bedrooms" />
                 </div>
                 <div class="bathroom">
-                    <label for="bathroom">Bathrooms</label>
+                    <label for="bathrooms">Bathrooms</label>
                     <Field name="bathrooms" type="number" :class="{'is-invalid': errors.bathrooms }"/>
                     <ErrorMessage name="bathrooms" />
                 </div>
@@ -95,15 +95,15 @@ import * as Yup from 'yup';
 export default {
     data(){
         const schema = Yup.object().shape({
-            //image: "",
+            image: Yup.mixed().required("An image is required"),
             price: Yup.number("Price should be a number").positive("Price should be a positive number").required('Price is required.'),
             bedrooms: Yup.number('The number of bedrooms should be a number.').positive("The number of bedrooms should be a positive number").required('The number of bedrooms is required. '),
             bathrooms: Yup.number('The number of bathrooms should be a number.').positive("The number of bathrooms should be a positive number").required('The number of bathrooms is required. '),
             size: Yup.number('The size of the house should be a number.').positive('The number of size should be a positive number.').required('Size is required.'),
             description: Yup.string().required('Description of the house is required.'),
-            street: Yup.string().required('Street name is required.'),
+            streetName: Yup.string().required('Street name is required.'),
             houseNumber: Yup.number("House number should be a number").positive("House number should be a positive number").required('House number is required.'),
-            houseNumberAddition: Yup.string(),
+            numberAddition: Yup.string(),
             city: Yup.string().required('City is required.'),
             zip: Yup.string().required('Postal code is required')
                 .matches(/[0-9]{4}\s?[A-Z]{2}/, "Postal code must be 4 digits with two uppercase letters"),
@@ -112,6 +112,7 @@ export default {
             hasGarage: Yup.boolean().required('Please inform whether the house has a garage or not.'),
         }); 
         return {
+            selectedFile: null,
             schema,
             id: this.newId,
             createdAt: new Date().toISOString().split('T')[0],
@@ -130,13 +131,16 @@ export default {
     },
    
     methods: {
-        updateImage(e){
-            this.houseData.image = e.target.value
+        handleFileChange(event){
+            this.selectedFile = event.target.files[0]
         },
         goBack(e){
             this.$router.back()
         },
         handlePost(values){
+/*
+            console.log(values)
+            console.log(this.selectedFile)
             const newHouse = {
                 id: this.newId,
                 //image: "",
@@ -161,10 +165,10 @@ export default {
             }
                         
             const id = newHouse.id //prevent rerender interrupting router
-            
-            this.$store.commit("createNewListing", newHouse)
-
-            this.$router.push(`/house-details/${id}`)
+            */
+            //this.$store.commit("createNewListing", newHouse)
+            this.$store.dispatch("createNewHouse", {houseData: values, imageFile: this.selectedFile})
+            //this.$router.push(`/house-details/${id}`)
         }
     }
 }

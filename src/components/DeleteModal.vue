@@ -35,14 +35,14 @@
     width: 100%; 
     height: 100%; 
     overflow: auto; 
-    background-color: rgba(0, 0, 0, 0.4); 
+    background-color: rgba(0, 0, 0, 0.2); 
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .delete-content {
-    background-color: #fefefe;
+    background-color: #d87272;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;

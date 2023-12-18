@@ -17,12 +17,9 @@
                         <router-link :to="`/edit-my-house/${house.id}`">
                             <button>edit</button>
                         </router-link>
-                        <button id="deleteButton" @click="toggleDelete">delete</button>
-                        <div class="deleteInforming" v-show="this.deleteInforming">
-                            <p>Are you sure you want to delete this item from the list?</p>
-                            <button :id="`${house.id}`" @click="handleDelete"> Yes </button>
-                            <button id="backButton" @click="toggleDelete"> Back</button>
-                        </div>
+                        <button @click="showModal = true">delete</button>
+                        <DeleteModal  :isVisible="showModal" @confirm="(e) => handleDelete(item.id, e)" @cancel="showModal = false" />
+
                     </div>
                 </div>
                 <div class="hd-contents-details-info">
@@ -50,21 +47,23 @@
                 </div>
                 <p>{{ house.description }}</p>
             </div>
+
         </div>
     </div>
 
 </template>
 
 <script>
+import DeleteModal from "../components/DeleteModal.vue";
 
 export default {
     name: "HouseDetail", 
     components: {
-
+        DeleteModal
     }, 
     data(){
         return {
-            deleteInforming: false,
+            showModal: false,
         }
     },
     computed: {
@@ -83,11 +82,11 @@ export default {
             } 
             this.deleteInforming = !this.deleteInforming
         },
-        handleDelete(e){
-            const numberId = parseInt(e.target.id)
-            this.$store.commit("deleteListing", numberId); 
+        handleDelete(itemId){
+            this.showModal = false
+            this.$store.dispatch("deleteHouse", itemId)
+        },
     },
-    }
 }
 </script>
 

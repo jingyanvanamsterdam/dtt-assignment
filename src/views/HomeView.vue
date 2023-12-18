@@ -48,7 +48,7 @@
                     <button>edit</button>
                   </router-link>
                     <button @click="showModal = true">delete</button>
-                    <DeleteModal  :isVisible="showModal" @confirm="(e) => handleDelete(item.id, e)" @cancel="showModal = false" />
+                    <DeleteModal  :isVisible="showModal" @confirm="(e) => handleDelete(item.id)" @cancel="showModal = false" />
                 </div>
               </div>
             
@@ -79,16 +79,10 @@ export default {
     sortBySize(){
       this.$store.commit("sortBySize")
     }, 
-    toggleDelete(e){
-      console.log(e.target.id)
-      if (this.deleteInforming && e.target.id==="deleteButton"){
-        return
-      } 
-      this.deleteInforming = !this.deleteInforming
-    },
-    
-    handleDelete(itemId, e){
-      this.$store.commit("deleteListing", itemId); 
+
+    handleDelete(itemId){
+      this.showModal = false
+      this.$store.dispatch("deleteHouse", itemId); 
     },
   }, 
   
@@ -110,6 +104,9 @@ export default {
     searchResult(){
       return this.houses.length === 1 ? " 1 result found " : `${this.houses.length} results found`  
     }, 
+  }, 
+  created() {
+    this.$store.dispatch('fetchHouses');
   }
 };
 </script>
