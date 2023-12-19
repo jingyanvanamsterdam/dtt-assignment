@@ -9,15 +9,19 @@
         </router-link>
         
         <div v-if="house" class="hd-contents">
+            <img class="hd-house-img" :src="house.image">
             <div class="hd-contents-details">
-                <img :src="house.image">
                 <div class="hd-contents-details-heading">
-                    <p>{{ house.location.street }} {{ house.location.houseNumber }}</p>
+                    <p class="hd-street">{{ house.location.street }} {{ house.location.houseNumber }}</p>
                     <div class="hd-contents-details-edits" v-show="house.madeByMe">
                         <router-link :to="`/edit-my-house/${house.id}`">
-                            <button>edit</button>
+                            <button class="icon-button">
+                                <img src="../../public/images/ic_edit@3x.png">
+                            </button>
                         </router-link>
-                        <button @click="showModal = true">delete</button>
+                        <button class="icon-button" @click="showModal = true">
+                            <img src="../../public/images/ic_delete@3x.png">
+                        </button>
                         <DeleteModal  :isVisible="showModal" @confirm="(e) => handleDelete(item.id, e)" @cancel="showModal = false" />
 
                     </div>
@@ -31,9 +35,9 @@
                         <img class="img-small" src="../../public/images/ic_price@3x.png">
                         <p>{{ house.price }}</p>
                         <img class="img-small" src="../../public/images/ic_size@3x.png">
-                        <p>{{ house.size }}</p>
+                        <p>{{ house.size }} m2</p>
                         <img class="img-small" src="../../public/images/ic_construction_date@3x.png">
-                        <p>{{ house.constructionYear }}</p>
+                        <p>Build in {{ house.constructionYear }}</p>
                     </div>
                     <div class="info-bbg">
                         <img class="img-small" src="../../public/images/ic_bed@3x.png">
@@ -45,7 +49,7 @@
                         <p v-else>No</p>
                     </div>
                 </div>
-                <p>{{ house.description }}</p>
+                <p class="hd-description">{{ house.description }}</p>
             </div>
 
         </div>
@@ -90,44 +94,6 @@ export default {
 
 <style lang="css">
 
-.hd-heading {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
 
-img.hd-heading {
-    width: 2%; 
-    height: auto;
-    margin-right: 5px;
-}
-
-.hd-heading p {
-    font-size: 16px;
-    font-family: 'Montserrat';
-    font-weight: 600;
-}
-
-.hd-contents {
-    display: flex; 
-    align-items: flex-start;
-}
-
-.hd-contents-heading {
-    display: flex;
-    align-items: center;
-}
-
-.hd-contents-details-edits {
-    display: flex;
-    flex: 1;
-    margin-left: auto;
-    justify-content: end;
-}
-
-img.hd-contents-details {
-    width: 100%; 
-    height: auto;
-}
 
 </style>

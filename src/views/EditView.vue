@@ -1,90 +1,99 @@
 <template>
-    <div v-if="house" class="create">
-        <router-link :to="`/house-details/${house.id}`">
-            <div class="hd-heading">
-                <img src="../../public/images/ic_back_grey@3x.png">
-                <p>Back to details</p>
-            </div>
-        </router-link>
+    <div class="form-container">
+        <div v-if="house" class="form">
+            <router-link :to="`/house-details/${house.id}`">
+                <div class="hd-heading">
+                    <img src="../../public/images/ic_back_grey@3x.png">
+                    <p>Back to detail page</p>
+                </div>
+            </router-link>
 
-        <h3>Edit listing</h3>
-        <Form  @submit="handlePost"  :validation-schema="schema" v-slot="{ errors }">
-            <div class="street">
-                <label for="street name">Street name</label>
-                <Field name="streetName" type="text" v-model="houseData.location.street" :class="{'is-invalid': errors.streetName }"/>
-                <ErrorMessage name="streetName"/>
-            </div>
-            <div class="houseNum"></div>
-                <div>
-                    <label>House number</label>
-                    <Field name="houseNumber" type="number" size="10" v-model="houseData.location.houseNumber" :class="{'is-invalid': errors.houseNumber }"/>
-                    <ErrorMessage name="houseNumber" />
+            <h3>Edit listing</h3>
+            <Form  @submit="handlePost"  :validation-schema="schema" v-slot="{ errors }">
+                <div class="street">
+                    <label for="street name">Street name*</label>
+                    <Field name="streetName" type="text" v-model="houseData.location.street" :class="{'is-invalid': errors.streetName }"/>
+                    <ErrorMessage class="errors" name="streetName"/>
                 </div>
-                <div>
-                    <label>Addition (optional)</label>
-                    <Field name="numberAddition" type="text" size="10" v-model="houseData.location.houseNumberAddition" />
+                <div class="houseNum-row">
+                    <div class="houseNumber"> 
+                        <label>House number*</label>
+                        <Field name="houseNumber" type="number" v-model="houseData.location.houseNumber" :class="{'is-invalid': errors.houseNumber }"/>
+                        <ErrorMessage class="errors" name="houseNumber" />
+                    </div>
+                    <div class="numberAddition">
+                        <label>Addition (optional)</label>
+                        <Field name="numberAddition" type="text" v-model="houseData.location.houseNumberAddition" />
+                    </div>
                 </div>
-            <div class="zip">
-                <label>Postal code</label>
-                <Field name="zip" type="text" size="15" v-model="houseData.location.zip" :class="{'is-invalid': errors.zip }"/>
-                <ErrorMessage name="zip" />
-            </div>
-            <div class="city">
-                <label>City</label>
-                <Field name="city" type="text" size="15" v-model="houseData.location.city" :class="{'is-invalid': errors.city }"/>
-                <ErrorMessage name="city" />
-            </div>
-          
-            <div class="upload-img">
-                <label for="image">Upload picture (PNG or JPG)</label>
-                <Field name="image" type="file" v-model="houseData.image" @change="handleFileChange"/>
-            </div>
-            <div class="price">
-                <label>Price</label>
-                <Field name="price" type="number" v-model="houseData.price" :class="{'is-invalid': errors.price }"/>
-                <ErrorMessage name="price" />
-            </div>
-            <div class="size-garage">
-                <div class="size">
-                    <label>Size</label>
-                    <Field name="size" type="number" v-model="houseData.size" :class="{'is-invalid': errors.size }"/>
-                    <ErrorMessage name="size" />
+                <div class="zip">
+                    <label>Postal code*</label>
+                    <Field name="zip" type="text" v-model="houseData.location.zip" :class="{'is-invalid': errors.zip }"/>
+                    <ErrorMessage class="errors" name="zip" />
                 </div>
-                <div class="garage">
-                    <label>Garage</label>
-                    <Field as="select" name="hasGarage" v-model="houseData.hasGarage" :class="{'is-invalid': errors.hasGarage }">
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                    </Field>
-                    <ErrorMessage name="hasGarage" />
+                <div class="city">
+                    <label>City*</label>
+                    <Field name="city" type="text" v-model="houseData.location.city" :class="{'is-invalid': errors.city }"/>
+                    <ErrorMessage class="errors" name="city" />
                 </div>
-            </div>
-            <div class="bed-bath">
-                <div class="bedroom">
-                    <label>Bedrooms</label>
-                    <Field name="bedrooms" type="number" v-model="houseData.rooms.bedrooms" :class="{'is-invalid': errors.bedrooms }"/>
-                    <ErrorMessage name="bedrooms" />
+            
+                <div class="upload-img">
+                    <label for="image">Upload picture (PNG or JPG)*</label>
+                    <Field name="image" type="file" v-model="houseData.image" @change="handleFileChange"/>
                 </div>
-                <div class="bathroom">
-                    <label>Bathrooms</label>
-                    <Field name="bathrooms" type="number" v-model="houseData.rooms.bathrooms" :class="{'is-invalid': errors.bathrooms }"/>
-                    <ErrorMessage name="bathrooms" />
+                <div class="price">
+                    <label>Price*</label>
+                    <div class="price-input-wrapper">
+                        <Field name="price" type="number" v-model="houseData.price" :class="{'is-invalid': errors.price }"/>
+                        <span class="price-unit"> € </span>
+                    </div>
+                    <ErrorMessage class="errors" name="price" />
                 </div>
-            </div>
-            <div class="construction-year">
-                <label>Construction year</label>
-                <Field name="constructionYear" type="number" v-model="houseData.constructionYear" :class="{'is-invalid': errors.constructionYear }"/>
-                <ErrorMessage name="constructionYear" />
-            </div>
-            <div class="description">
-                <label>Description</label>
-                <Field name="description"  type="text" v-model="houseData.description" :class="{'is-invalid': errors.description }" />
-                <ErrorMessage name="description" />
-            </div>
-            <div class="submit">
-                <input type="submit" value="Post" />
-            </div>
-        </Form>
+                <div class="size-garage">
+                    <div class="size">
+                        <label>Size*</label>
+                        <div class="size-input-wrapper">
+                            <Field name="size" type="number" v-model="houseData.size" :class="{'is-invalid': errors.size }"/>
+                            <span class="size-unit">m²</span>
+                        </div>
+                        <ErrorMessage class="errors" name="size" />
+                    </div>
+                    <div class="garage">
+                        <label>Garage*</label>
+                        <Field as="select" name="hasGarage" v-model="houseData.hasGarage" :class="{'is-invalid': errors.hasGarage }">
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </Field>
+                        <ErrorMessage class="errors" name="hasGarage" />
+                    </div>
+                </div>
+                <div class="bed-bath">
+                    <div class="bedroom">
+                        <label>Bedrooms*</label>
+                        <Field name="bedrooms" type="number" v-model="houseData.rooms.bedrooms" :class="{'is-invalid': errors.bedrooms }"/>
+                        <ErrorMessage class="errors" name="bedrooms" />
+                    </div>
+                    <div class="bathroom">
+                        <label>Bathrooms*</label>
+                        <Field name="bathrooms" type="number" v-model="houseData.rooms.bathrooms" :class="{'is-invalid': errors.bathrooms }"/>
+                        <ErrorMessage class="errors" name="bathrooms" />
+                    </div>
+                </div>
+                <div class="construction-year">
+                    <label>Construction year*</label>
+                    <Field name="constructionYear" type="number" v-model="houseData.constructionYear" :class="{'is-invalid': errors.constructionYear }"/>
+                    <ErrorMessage class="errors" name="constructionYear" />
+                </div>
+                <div class="description">
+                    <label>Description*</label>
+                    <Field name="description"  as="textarea" rows="5" v-model="houseData.description" :class="{'is-invalid': errors.description }" />
+                    <ErrorMessage class="errors" name="description" />
+                </div>
+                <div class="submit">
+                    <button type="submit">Save</button>
+                </div>
+            </Form>
+        </div>
     </div>
 </template>
 
@@ -95,20 +104,21 @@ import * as Yup from 'yup';
 export default {
     data(){
         const schema = Yup.object().shape({
-            price: Yup.number("Price should be a number").positive("Price should be a positive number").required('Price is required.'),
-            bedrooms: Yup.number('The number of bedrooms should be a number.').positive("The number of bedrooms should be a positive number").required('The number of bedrooms is required. '),
-            bathrooms: Yup.number('The number of bathrooms should be a number.').positive("The number of bathrooms should be a positive number").required('The number of bathrooms is required. '),
-            size: Yup.number('The size of the house should be a number.').positive('The number of size should be a positive number.').required('Size is required.'),
-            description: Yup.string().required('Description of the house is required.'),
-            streetName: Yup.string().required('Street name is required.'),
-            houseNumber: Yup.number("House number should be a number").positive("House number should be a positive number").required('House number is required.'),
+            image: Yup.mixed().required("Required"),
+            price: Yup.number("Must be a number").positive("Must be a positive number").required('Required'),
+            bedrooms: Yup.number('Must be a number.').positive("Must be a positive number").required('Required'),
+            bathrooms: Yup.number('Must be a number.').positive("Must be a positive number").required('Required'),
+            size: Yup.number('Must be a number.').positive('Must be a positive number.').required('Required'),
+            description: Yup.string().required('Required'),
+            streetName: Yup.string().required('Required'),
+            houseNumber: Yup.number("Must be a number").positive("Must be a positive number").required('Required'),
             numberAddition: Yup.string(),
-            city: Yup.string().required('City is required.'),
-            zip: Yup.string().required('Postal code is required')
-                .matches(/[0-9]{4}\s?[A-Z]{2}/, "Postal code must be 4 digits with two uppercase letters"),
-            constructionYear: Yup.number().required()
-                .min(1000, "Construction year must be a valid year.").max(2023, "Construction year must be a valid year."),
-            hasGarage: Yup.boolean().required('Please inform whether the house has a garage or not.'),
+            city: Yup.string().required('Required'),
+            zip: Yup.string().required('Required')
+                .matches(/[0-9]{4}\s?[A-Z]{2}/, "Must be 4 digits with two uppercase letters"),
+            constructionYear: Yup.number().required('Required')
+                .min(1000, "Must be a valid year.").max(2023, "Must be a valid year."),
+            hasGarage: Yup.boolean().required('Required'),
         }); 
         return {
             schema,
@@ -173,28 +183,3 @@ export default {
     }
 }
 </script>
-
-<style>
-form {
-    max-width: 420px;
-    margin: 30px, auto; 
-    text-align: left;
-    padding: 40px; 
-    border-radius: 10px;
-}
-
-label {
-    display: inline-block;
-    margin: 25px 0 15px; 
-}
-/*
-input {
-    display: block;
-    padding: 10px 6px; 
-    width: 100%; 
-    box-sizing: border-box;
-    border: none;
-    border-bottom: 1px solid;
-
-}*/
-</style>

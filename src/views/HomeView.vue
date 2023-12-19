@@ -1,60 +1,73 @@
 <template>
-      <div class="body-container">
-        <div class="title">
-          <span>House</span>
-          <router-link to="/create-new-listing">
-            <button type="button">+ Create New</button>
-          </router-link>    
-        </div>
+  <div class="title">
+    <h1>Houses</h1>
+    <router-link to="/create-new-listing">
+      <button class="create-new" type="button">
+        <img src="../../public/images/ic_plus_white@3x.png" alt="icon">
+        CREATE NEW
+      </button>
+    </router-link>    
+  </div>
 
-        <div class="sorting">
-          <input type="search" placeholder="Search for a house" v-model="searchInput">
-          <div>
-            <button @click="sortByPrice">Price</button>
-            <button @click="sortBySize">Size</button>
+  <div class="search-filter">
+    <div class="sorting">
+          <div class="search-bar">
+            <img class="search-icon" src="../../public/images/ic_search@3x.png" alt="search" >  
+            <input type="search" placeholder="Search for a house" v-model="searchInput">
           </div>
-        </div>
-        <div v-show="this.searchInput.length > 0"> {{ searchResult }} </div>
 
-        <!--This is houses container-->
-        <div class="items-container">
-          <div class="items">
-            
-              <div class="item" v-for="item in houses" :key="item.id">
-                <router-link class="item-details" :to="`/house-details/${item.id}`">
-                  <img class="item-img" :src="item.image" :alt="item.id" />
-                  <div class="item-info">
-                    <h5>{{item.location.street}} {{item.location.houseNumber}}</h5>
-                    <p>€ {{item.price}}</p>
-                    <p>{{item.location.zip}} {{item.location.city}}</p>
-                    <div class="item-info-bbg">
-                      <div class="item-info-bbg-bed">
-                        <img class="img-small" src="../../public/images/ic_bed@3x.png"/>
-                        <p>{{item.rooms.bedrooms}}</p>
-                      </div>
-                      <div class="item-info-bbg-bath">
-                          <img class="img-small" src="../../public/images/ic_bath@3x.png" />
-                          <p>{{item.rooms.bathrooms}}</p>
-                      </div>
-                      <div class="item-info-bbg-size">
-                          <img class="img-small" src="../../public/images/ic_size@3x.png" />
-                          <p>{{item.size}} m2</p>
-                      </div>
-                    </div>
-                  </div>
-                </router-link> 
-                <div class="item-edits" v-show="item.madeByMe">
-                  <router-link :to="`/edit-my-house/${item.id}`">
-                    <button>edit</button>
-                  </router-link>
-                    <button @click="showModal = true">delete</button>
-                    <DeleteModal  :isVisible="showModal" @confirm="(e) => handleDelete(item.id)" @cancel="showModal = false" />
+          <div class="filter">
+            <button class="price-filter" @click="sortByPrice">Price</button>
+            <button class="size-filter" @click="sortBySize">Size</button>
+          </div>
+    </div>
+
+
+    <div v-show="this.searchInput.length > 0"> {{ searchResult }} </div>
+  </div>
+  
+
+  <!--This is houses container-->
+  <div class="items-container">
+    <div class="items">
+      
+        <div class="item" v-for="item in houses" :key="item.id">
+          <router-link class="item-details" :to="`/house-details/${item.id}`">
+            <img class="item-img" :src="item.image" :alt="item.id" />
+            <div class="item-info">
+              <h5 class="item-street">{{item.location.street}} {{item.location.houseNumber}}</h5>
+              <p class="item-price">€ {{item.price}}</p>
+              <p class="item-location">{{item.location.zip}} {{item.location.city}}</p>
+              <div class="item-info-bbg">
+                <div class="item-info-bbg-bed">
+                  <img class="img-small" src="../../public/images/ic_bed@3x.png"/>
+                  <p>{{item.rooms.bedrooms}}</p>
+                </div>
+                <div class="item-info-bbg-bath">
+                    <img class="img-small" src="../../public/images/ic_bath@3x.png" />
+                    <p>{{item.rooms.bathrooms}}</p>
+                </div>
+                <div class="item-info-bbg-size">
+                    <img class="img-small" src="../../public/images/ic_size@3x.png" />
+                    <p>{{item.size}} m2</p>
                 </div>
               </div>
-            
+            </div>
+          </router-link> 
+          <div class="item-edits" v-show="item.madeByMe">
+            <router-link :to="`/edit-my-house/${item.id}`">
+              <button class="icon-button">
+                <img src="../../public/images/ic_edit@3x.png">
+              </button>
+            </router-link>
+              <button class="icon-button" @click="showModal = true">
+                <img src="../../public/images/ic_delete@3x.png">
+              </button>
+              <DeleteModal  :isVisible="showModal" @confirm="(e) => handleDelete(item.id)" @cancel="showModal = false" />
           </div>
         </div>
-      </div>
+    </div>
+  </div>
 </template>
 
 <script>
