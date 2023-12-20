@@ -21,8 +21,6 @@
             <button class="size-filter" @click="sortBySize">Size</button>
           </div>
     </div>
-
-
     <div v-show="this.searchInput.length > 0"> {{ searchResult }} </div>
   </div>
   
@@ -30,7 +28,6 @@
   <!--This is houses container-->
   <div class="items-container">
     <div class="items">
-      
         <div class="item" v-for="item in houses" :key="item.id">
           <router-link class="item-details" :to="`/house-details/${item.id}`">
             <img class="item-img" :src="item.image" :alt="item.id" />
@@ -75,16 +72,18 @@ import DeleteModal from "../components/DeleteModal.vue";
 
 export default {
   name: "HomeView",
+
   components: {
     DeleteModal
   }, 
+
   data() {
     return {
       searchInput: "",
       showModal: false,
     }
-    
   },
+
   methods: {
     sortByPrice(){
       this.$store.commit("sortByPrice")
@@ -111,15 +110,17 @@ export default {
           house.location.zip.toString().includes(this.searchInput.toLowerCase()) ||
           house.description.toLowerCase().includes(this.searchInput.toLowerCase())
           ) 
-      });
+        })
       }
     },
+
     searchResult(){
       return this.houses.length === 1 ? " 1 result found " : `${this.houses.length} results found`  
     }, 
   }, 
+
   created() {
     this.$store.dispatch('fetchHouses');
   }
-};
+}
 </script>

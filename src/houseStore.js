@@ -1,7 +1,6 @@
 import { createStore } from "vuex"; 
-import houses from "../houses.json"; 
-import { HTTP } from "@/assets/HTTP";
-import router from "../router";
+import { HTTP } from "@/HTTP";
+import router from "./router";
 
 export const useHouseStore = createStore({
 
@@ -10,26 +9,30 @@ export const useHouseStore = createStore({
             houses: []
         }
     },
-    getters: {
-    },
+
     mutations: {
         setHouses(state, houses){
             state.houses = houses
         },
+
         deleteListing(state, id){
             state.houses = state.houses.filter((other_house) => other_house.id !== id)
+            router.replace('/')
         },
+
         createNewListing(state, house){
-            console.log(house)
             state.houses.push(house)
             router.push(`/house-details/${house.id}`)
         }, 
+
         sortByPrice(state){
             state.houses.sort((a, b) => a.price - b.price)
         },
+
         sortBySize(state){
             state.houses.sort((a, b) => a.size - b.size)
         },
+
         editListing(state, house){
             state.houses = state.houses.map((other_house) => {
                 if (house.id === other_house.id){
@@ -40,12 +43,11 @@ export const useHouseStore = createStore({
             router.replace(`/house-details/${house.id}`)  
         }
     },
-    actions: {
 
+    actions: {
         fetchHouses({commit, state}){
             if(state.houses.length === 0){
                 HTTP.get("houses").then(response => {
-                    console.log(response.data); 
                     commit('setHouses', response.data)
                 }).catch((error) =>{
                     console.log('error', error)
@@ -54,11 +56,16 @@ export const useHouseStore = createStore({
         },
 
         async createNewHouse({commit}, {houseData, imageFile}){
-            const response = await HTTP.postForm("houses", houseData)
-            const houseId = response.data.id
-            await HTTP.postForm(`houses/${houseId}/upload`, {image: imageFile})
-            const listingWithImageUrl = (await HTTP.get(`houses/${houseId}`)).data[0]
-            commit('createNewListing', listingWithImageUrl)   
+            try{
+                const response = await HTTP.postForm("houses", houseData)
+                const houseId = response.data.id
+                await HTTP.postForm(`houses/${houseId}/upload`, {image: imageFile})
+                const listingWithImageUrl = (await HTTP.get(`houses/${houseId}`)).data[0]
+                commit('createNewListing', listingWithImageUrl)
+            } catch (error){
+                console.log('error', error)
+            }
+               
         }, 
 
         async editHouse({commit}, {houseData, id, imageFile}){

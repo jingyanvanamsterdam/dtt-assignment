@@ -1,12 +1,7 @@
 <template>
     <div class="hd">
         
-        <router-link to="/">
-            <div class="hd-heading">
-                <img src="../../public/images/ic_back_grey@3x.png">
-                <p>Back to overview</p>
-            </div>
-        </router-link>
+        <GoBack route="/" showString="Back to overview"/>
         
         <div v-if="house" class="hd-contents">
             <img class="hd-house-img" :src="house.image">
@@ -22,7 +17,7 @@
                         <button class="icon-button" @click="showModal = true">
                             <img src="../../public/images/ic_delete@3x.png">
                         </button>
-                        <DeleteModal  :isVisible="showModal" @confirm="(e) => handleDelete(item.id, e)" @cancel="showModal = false" />
+                        <DeleteModal  :isVisible="showModal" @confirm="(e) => handleDelete(house.id, e)" @cancel="showModal = false" />
 
                     </div>
                 </div>
@@ -59,11 +54,13 @@
 
 <script>
 import DeleteModal from "../components/DeleteModal.vue";
+import GoBack from "@/components/GoBack.vue";
 
 export default {
     name: "HouseDetail", 
     components: {
-        DeleteModal
+        DeleteModal,
+        GoBack
     }, 
     data(){
         return {
