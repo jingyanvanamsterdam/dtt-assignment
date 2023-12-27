@@ -57,10 +57,7 @@
                 <img src="../../public/images/ic_edit@3x.png">
               </button>
             </router-link>
-              <button class="icon-button" @click="showModal = true">
-                <img src="../../public/images/ic_delete@3x.png">
-              </button>
-              <DeleteModal  :isVisible="showModal" @confirm="(e) => handleDelete(item.id)" @cancel="showModal = false" />
+            <DeleteModal :itemId="item.id" />
           </div>
         </div>
     </div>
@@ -80,7 +77,6 @@ export default {
   data() {
     return {
       searchInput: "",
-      showModal: false,
     }
   },
 
@@ -92,10 +88,7 @@ export default {
       this.$store.commit("sortBySize")
     }, 
 
-    handleDelete(itemId){
-      this.showModal = false
-      this.$store.dispatch("deleteHouse", itemId); 
-    },
+    
   }, 
   
   computed: {

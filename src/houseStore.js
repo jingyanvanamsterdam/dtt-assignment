@@ -69,9 +69,14 @@ export const useHouseStore = createStore({
         }, 
 
         async editHouse({commit}, {houseData, id, imageFile}){
+
             try {
                 await HTTP.postForm(`houses/${id}`, houseData)
-                await HTTP.postForm(`houses/${id}/upload`, {image: imageFile})
+                
+                //If image was not changed, it will be a url/string. Else it will be a File object and we need to upload that object
+                if (imageFile instanceof File){
+                    await HTTP.postForm(`houses/${id}/upload`, {image: imageFile})
+                }
                 const response = await HTTP.get(`houses/${id}`)
                 const updatedListing = response.data[0]
                 commit("editListing", updatedListing)

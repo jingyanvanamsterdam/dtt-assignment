@@ -572,13 +572,29 @@ textarea {
     background-color: #4A4B4C;
 }
 
-/* Unfinished: for preview image
-.preview {
-    width: 10%; 
-    height:auto;
+.preview-img {
+    width: 100px;
+    height: 100px; 
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+}
+
+.to-preview {
+    position: relative;
+    width: 110px;
+    height: 110px; 
+}
+
+.to-preview .removal-icon{
+    position: absolute; 
+    width: 30px;
+    top: -10px; 
+    right: -5px;
+    z-index: 100;
 }
 
 .upload-box {
     border: 2px dashed #C3C3C3;
     padding: 20px;
-}*/
+}

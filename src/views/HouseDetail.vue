@@ -14,10 +14,7 @@
                                 <img src="../../public/images/ic_edit@3x.png">
                             </button>
                         </router-link>
-                        <button class="icon-button" @click="showModal = true">
-                            <img src="../../public/images/ic_delete@3x.png">
-                        </button>
-                        <DeleteModal  :isVisible="showModal" @confirm="(e) => handleDelete(house.id, e)" @cancel="showModal = false" />
+                        <DeleteModal  :itemId="house.id"  />
 
                     </div>
                 </div>
@@ -62,11 +59,6 @@ export default {
         DeleteModal,
         GoBack
     }, 
-    data(){
-        return {
-            showModal: false,
-        }
-    },
     computed: {
         houseId(){
             return parseInt(this.$route.params.id)
@@ -79,12 +71,6 @@ export default {
     }, 
     created() {
         this.$store.dispatch('fetchHouses');
-    },
-    methods: {
-        handleDelete(itemId){
-            this.showModal = false
-            this.$store.dispatch("deleteHouse", itemId)
-        },
     },
 }
 </script>

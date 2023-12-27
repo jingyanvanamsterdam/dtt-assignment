@@ -1,13 +1,10 @@
 <template>
     <div class="form-container">
         <div v-if="house" class="form">
-
             <GoBack :route="`/house-details/${house.id}`" showString="Back to detail page" />
-
             <h3>Edit listing</h3>
             <HouseForm  :initialHouseData="houseData" 
-                        :handleSubmit="handlePost" 
-                        :handleFileChange="handleFileChange" 
+                        :handleAfterSubmit="handlePost" 
                         buttonLabel="Post"/>
         </div>
     </div>
@@ -61,10 +58,6 @@ export default {
                 madeByMe:this.house.madeByMe,
             }
         },
-         /* Unfinished: for preview image 
-        previewFile(){
-            return this.house.image ? this.house.image : null;
-        },*/ 
     },
 
     created() {
@@ -72,18 +65,8 @@ export default {
     },
    
     methods: {
-        /*Unfinished: for removing former image and trigger file input field 
-        handleRemoveFile(event){
-            this.selectedFile = null;
-            this.previewFile = null;
-        },*/
-
-        handleFileChange(event){
-            //this.previewFile = URL.createObjectURL(event.target.files[0])
-            this.selectedFile = event.target.files[0]
-        },
-        handlePost(values){
-            this.$store.dispatch("editHouse", {houseData: values, id:this.houseData.id, imageFile: this.selectedFile})
+        handlePost(values, imageFile){
+            this.$store.dispatch("editHouse", {houseData: values, id:this.houseData.id, imageFile: imageFile})
         },
     }
 }
