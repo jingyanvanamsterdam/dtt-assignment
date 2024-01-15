@@ -7,7 +7,7 @@
     <br>
     <h1>Design and Development</h1>
     <div class="about-signature">
-      <img src="../../public/images/img_logo_dtt@3x.png">
+      <img src="../assets/images/img_logo_dtt@3x.png">
       <div class="about-signature-web">
         <h5>By DTT</h5>
         <a href="https://www.d-tt.nl"> www.d-tt.nl</a>

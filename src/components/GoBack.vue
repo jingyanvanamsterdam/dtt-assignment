@@ -1,7 +1,7 @@
 <template>
     <router-link :to="route">
         <div class="hd-heading">
-            <img src="../../public/images/ic_back_grey@3x.png">
+            <img src="../assets/images/ic_back_grey@3x.png">
             <p>{{showString}}</p>
         </div>
     </router-link>

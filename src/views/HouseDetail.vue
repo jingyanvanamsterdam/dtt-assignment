@@ -11,7 +11,7 @@
                     <div class="hd-contents-details-edits" v-show="house.madeByMe">
                         <router-link :to="`/edit-my-house/${house.id}`">
                             <button class="icon-button">
-                                <img src="../../public/images/ic_edit@3x.png">
+                                <img src="../assets/images/ic_edit@3x.png">
                             </button>
                         </router-link>
                         <DeleteModal  :itemId="house.id"  />
@@ -20,23 +20,23 @@
                 </div>
                 <div class="hd-contents-details-info">
                     <div class="info-pc">
-                        <img class="img-small" src="../../public/images/ic_location@3x.png">
+                        <img class="img-small" src="../assets/images/ic_location@3x.png">
                         <p>{{ house.location.zip }} {{ house.location.city }}</p>
                     </div>
                     <div class="info-psy">
-                        <img class="img-small" src="../../public/images/ic_price@3x.png">
+                        <img class="img-small" src="../assets/images/ic_price@3x.png">
                         <p>{{ house.price }}</p>
-                        <img class="img-small" src="../../public/images/ic_size@3x.png">
+                        <img class="img-small" src="../assets/images/ic_size@3x.png">
                         <p>{{ house.size }} m2</p>
-                        <img class="img-small" src="../../public/images/ic_construction_date@3x.png">
+                        <img class="img-small" src="../assets/images/ic_construction_date@3x.png">
                         <p>Build in {{ house.constructionYear }}</p>
                     </div>
                     <div class="info-bbg">
-                        <img class="img-small" src="../../public/images/ic_bed@3x.png">
+                        <img class="img-small" src="../assets/images/ic_bed@3x.png">
                         <p>{{ house.rooms.bedrooms }}</p>
-                        <img class="img-small" src="../../public/images/ic_bath@3x.png">
+                        <img class="img-small" src="../assets/images/ic_bath@3x.png">
                         <p>{{ house.rooms.bathrooms }}</p>
-                        <img class="img-small" src="../../public/images/ic_garage@3x.png">
+                        <img class="img-small" src="../assets/images/ic_garage@3x.png">
                         <p v-if="house.hasGarage">Yes</p>
                         <p v-else>No</p>
                     </div>

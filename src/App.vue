@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <img class="logo" src="../public/images/img_logo_dtt@3x.png"/>
+    <img class="logo" src="./assets/images/img_logo_dtt@3x.png"/>
     <router-link class="nav-home" to="/">
       <p>Houses</p>
     </router-link> 

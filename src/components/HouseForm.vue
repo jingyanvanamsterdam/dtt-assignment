@@ -54,13 +54,13 @@
                 <div class="to-preview" v-if="previewImg">
                     <img class="preview-img" :src="previewImg">
                     <img class="removal-icon" 
-                         src="../../public/images/ic_clear_white@3x.png" 
+                         src="../assets/images/ic_clear_white@3x.png" 
                          @click="(e) => {triggerRemoval(e); handleChange(null)}"> 
                 </div>
                 
                 <div class="to-upload" v-else>
                     <img class="upload-box" 
-                         src="../../public/images/ic_plus_grey@3x.png" 
+                         src="../assets/images/ic_plus_grey@3x.png" 
                          @click="triggerFileInput">
                     <input ref="imageInput" 
                            style="display: none" 
@@ -140,7 +140,7 @@
         <div class="description">
             <label for="description">Description*</label>
             <Field name="description"  
-                   type="text" 
+                   type="textarea" 
                    :value="houseData.description" 
                    :class="{'is-invalid': errors.description }" />
             <ErrorMessage class="errors" name="description" />

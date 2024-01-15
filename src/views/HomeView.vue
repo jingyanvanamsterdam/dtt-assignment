@@ -3,7 +3,7 @@
     <h1>Houses</h1>
     <router-link to="/create-new-listing">
       <button class="create-new" type="button">
-        <img src="../../public/images/ic_plus_white@3x.png" alt="icon">
+        <img src="../assets/images/ic_plus_white@3x.png" alt="icon">
         CREATE NEW
       </button>
     </router-link>    
@@ -12,14 +12,10 @@
   <div class="search-filter">
     <div class="sorting">
           <div class="search-bar">
-            <img class="search-icon" src="../../public/images/ic_search@3x.png" alt="search" >  
+            <img class="search-icon" src="../assets/images/ic_search@3x.png" alt="search" >  
             <input type="search" placeholder="Search for a house" v-model="searchInput">
           </div>
-
-          <div class="filter">
-            <button class="price-filter" @click="sortByPrice">Price</button>
-            <button class="size-filter" @click="sortBySize">Size</button>
-          </div>
+          <Sorting />
     </div>
     <div v-show="this.searchInput.length > 0"> {{ searchResult }} </div>
   </div>
@@ -37,15 +33,15 @@
               <p class="item-location">{{item.location.zip}} {{item.location.city}}</p>
               <div class="item-info-bbg">
                 <div class="item-info-bbg-bed">
-                  <img class="img-small" src="../../public/images/ic_bed@3x.png"/>
+                  <img class="img-small" src="../assets/images/ic_bed@3x.png"/>
                   <p>{{item.rooms.bedrooms}}</p>
                 </div>
                 <div class="item-info-bbg-bath">
-                    <img class="img-small" src="../../public/images/ic_bath@3x.png" />
+                    <img class="img-small" src="../assets/images/ic_bath@3x.png" />
                     <p>{{item.rooms.bathrooms}}</p>
                 </div>
                 <div class="item-info-bbg-size">
-                    <img class="img-small" src="../../public/images/ic_size@3x.png" />
+                    <img class="img-small" src="../assets/images/ic_size@3x.png" />
                     <p>{{item.size}} m2</p>
                 </div>
               </div>
@@ -54,7 +50,7 @@
           <div class="item-edits" v-show="item.madeByMe">
             <router-link :to="`/edit-my-house/${item.id}`">
               <button class="icon-button">
-                <img src="../../public/images/ic_edit@3x.png">
+                <img src="../assets/images/ic_edit@3x.png">
               </button>
             </router-link>
             <DeleteModal :itemId="item.id" />
@@ -66,12 +62,14 @@
 
 <script>
 import DeleteModal from "../components/DeleteModal.vue";
+import Sorting from "../components/Sorting.vue"
 
 export default {
   name: "HomeView",
 
   components: {
-    DeleteModal
+    DeleteModal, 
+    Sorting
   }, 
 
   data() {
@@ -79,17 +77,6 @@ export default {
       searchInput: "",
     }
   },
-
-  methods: {
-    sortByPrice(){
-      this.$store.commit("sortByPrice")
-    }, 
-    sortBySize(){
-      this.$store.commit("sortBySize")
-    }, 
-
-    
-  }, 
   
   computed: {
     houses() {
@@ -106,7 +93,7 @@ export default {
         })
       }
     },
-
+    
     searchResult(){
       return this.houses.length === 1 ? " 1 result found " : `${this.houses.length} results found`  
     }, 

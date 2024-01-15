@@ -1,6 +1,6 @@
 <template>
     <button class="icon-button" @click="toggleVisibility">
-        <img src="../../public/images/ic_delete@3x.png">
+        <img src="../assets/images/ic_delete@3x.png">
     </button>
     <div class="delete" v-if="isVisible">
     <div class="delete-content">
