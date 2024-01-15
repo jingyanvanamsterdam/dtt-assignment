@@ -36,3 +36,67 @@ export default {
   }
 }
 </script>
+
+<style>
+.delete {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #FFFFFF;
+  margin: auto;
+  padding: 20px;
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+  border-radius: 10px;
+}
+
+.delete-content h5 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  margin: 20px;
+}
+
+.delete-content p {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  margin: 1px;
+}
+
+.delete-content button {
+  width: 250px;
+  height: 30px;
+  margin: 10px;
+  border: none;
+  border-radius: 8px;
+  color: #FFFFFF;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+
+}
+
+.button-yes {
+  background-color: #EB5440;
+}
+
+.button-goback {
+  background-color: #4A4B4C;
+}
+</style>

@@ -26,3 +26,28 @@
     </div>
   </div>
 </template>
+
+<style>
+.about p {
+  font-family: 'Open sans', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #4A4B4C;
+}
+
+.about-signature {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.about-signature h5 {
+  margin: 0px;
+}
+
+.about-signature img {
+  width: 200px;
+  height: auto;
+  margin-right: 10px;
+}
+</style>
