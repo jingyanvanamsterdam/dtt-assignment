@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="container">
     <br>
     <h1>About DTT Real Estate</h1>
     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum

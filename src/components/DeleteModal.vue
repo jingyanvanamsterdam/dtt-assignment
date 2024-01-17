@@ -1,5 +1,6 @@
 <template>
-  <button class="icon-button" @click="toggleVisibility">
+  <!--??Even stop propagation, click empty space will still trigger to router to detail page -->
+  <button class="icon-button" @click.prevent.stop="toggleVisibility">
     <img src="../assets/images/ic_delete@3x.png">
   </button>
   <div class="delete" v-if="isVisible">
@@ -8,14 +9,15 @@
       <p>Are you sure you want to delete this listing?</p>
       <p>This action cannot be undone. </p>
       <br>
-      <button class="button-yes" @click="handleDelete">YES, DELETE</button>
-      <button class="button-goback" @click="cancel">GO BACK</button>
+      <button class="button-yes"  @click.prevent.stop="handleDelete">YES, DELETE</button>
+      <button class="button-goback"  @click.prevent.stop="cancel">GO BACK</button>
       <!--move methods from HomePage and House Detail to DeleteModal because in HomePage, showModal's value is linked to every item which is deletable and it always delete the last item on the screen-->
     </div>
   </div>
 </template>
 
 <script>
+import { HTTP } from '@/HTTP'
 export default {
   name: "DeleteModal",
   props: ["itemId"],
@@ -30,7 +32,13 @@ export default {
       this.isVisible = false
     },
     handleDelete(event) {
-      this.$store.dispatch("deleteHouse", this.itemId);
+      HTTP.delete(`houses/${this.itemId}`).then(() => {
+        //To make the store change the state and then render, because the router is going to the home view and it needed to be informed the state is changed. 
+        this.$store.commit("deleteListing", this.itemId);
+        this.$router.replace('/')
+      }).catch((error) => {
+        console.log('error', error)
+      })
       this.isVisible = false
     },
   }

@@ -11,6 +11,7 @@
 <script>
 import GoBack from "@/components/GoBack.vue";
 import HouseForm from "@/components/HouseForm.vue";
+import { HTTP } from "@/HTTP";
 
 export default {
   components: {
@@ -19,8 +20,11 @@ export default {
   },
 
   methods: {
-    handlePost(values, imageFile) {
-      this.$store.dispatch("createNewHouse", { houseData: values, imageFile: imageFile })
+    async handlePost(values, imageFile) {
+        const response = await HTTP.postForm("houses", values)
+        const houseId = response.data.id
+        await HTTP.postForm(`houses/${houseId}/upload`, { image: imageFile })
+        this.$router.push(`/house-details/${houseId}`) 
     }
   }
 }

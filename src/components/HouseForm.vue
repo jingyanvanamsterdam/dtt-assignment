@@ -16,7 +16,7 @@
       </div>
       <div class="numberAddition">
         <label for="house addition">Addition (optional)</label>
-        <Field name="numberAddition" type="text" :value="houseData.location.numberAddition" />
+        <Field name="numberAddition" type="text" :value="houseData.location.houseNumberAddition" />
       </div>
     </div>
 

@@ -5,7 +5,7 @@
       <img class="hd-house-img" :src="house.image">
       <div class="hd-contents-details">
         <div class="hd-contents-details-heading">
-          <p class="hd-street">{{ house.location.street }} {{ house.location.houseNumber }}</p>
+          <p class="hd-street">{{ house.location.street }} {{ house.location.houseNumber }} {{ house.location.houseNumberAddition }}</p>
           <div class="hd-contents-details-edits" v-show="house.madeByMe">
             <router-link :to="`/edit-my-house/${house.id}`">
               <button class="icon-button">
@@ -71,29 +71,9 @@ export default {
 </script>
 
 <style>
-.hd,
-.about {
+.hd {
   margin: 0px 15%;
   padding-bottom: 30px;
-}
-
-.hd-heading {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding-top: 30px;
-}
-
-.hd-heading img {
-  width: 16px;
-  height: auto;
-  margin-right: 5px;
-}
-
-.hd-heading p {
-  font-size: 16px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
 }
 
 .hd-house-img {

@@ -13,11 +13,12 @@ body {
 }
 
 nav {
-  padding: 10px 15%;
+  padding: 10px 0px;
   display: flex;
   align-items: center;
   justify-content: left;
   background-color: #FFFFFF;
+  top: 0;
   position: fixed;
   z-index: 1000;
   width: 100%;
@@ -48,13 +49,9 @@ a:-webkit-any-link {
   text-decoration: none;
 }
 
-.container {
-  background-color: #F6F6F6;
-  padding-top: 55px;
-}
-
 html {
   height: 100%;
+  background-color: #F6F6F6;
 }
 
 
@@ -62,11 +59,16 @@ html {
   height: auto;
   width: 100px;
   margin-right: 5%;
+  margin-left: 15%;
 }
 
 h1 {
   font-weight: bold;
   font-size: 32px;
+}
+
+.container {
+  margin-top: 3em;
 }
 
 /*Form (CreateView&EditView) Style*/

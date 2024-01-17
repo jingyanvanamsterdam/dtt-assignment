@@ -11,6 +11,7 @@
 <script>
 import GoBack from "@/components/GoBack.vue";
 import HouseForm from "@/components/HouseForm.vue";
+import { HTTP } from "@/HTTP";
 
 export default {
   components: {
@@ -32,6 +33,7 @@ export default {
       return theHouse ? theHouse : null
     },
     houseData() {
+      console.log(this.house)
       return {
         id: this.house.id,
         image: this.house.image,
@@ -62,8 +64,19 @@ export default {
   },
 
   methods: {
-    handlePost(values, imageFile) {
-      this.$store.dispatch("editHouse", { houseData: values, id: this.houseData.id, imageFile: imageFile })
+    async handlePost(values, imageFile) {
+      console.log(values)
+      const id = this.houseData.id
+      try {
+        await HTTP.postForm(`houses/${id}`, values)
+        //If image was not changed, it will be a url/string. Else it will be a File object and we need to upload that object
+        if (imageFile instanceof File) {
+          await HTTP.postForm(`houses/${id}/upload`, { image: imageFile })
+        }
+        this.$router.replace(`/house-details/${id}`)
+      } catch (error) {
+        console.log('error', error)
+      }
     },
   }
 }
