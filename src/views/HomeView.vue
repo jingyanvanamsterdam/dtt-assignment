@@ -36,18 +36,15 @@ import HouseList from "@/components/HouseList.vue";
 
 export default {
   name: "HomeView",
-
   components: {
     Sorting,
     HouseList,
   },
-
   data() {
     return {
       searchInput: "",
     }
   },
-
   computed: {
     houses() {
       if (this.searchInput === "") {

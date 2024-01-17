@@ -1,7 +1,7 @@
 <template>
   <div class="items-container">
     <div class="item" v-for="item in houses" :key="item.id">
-      <div class="item-details" @click.prevent="(event) => goToDetail(event, item.id)">
+      <div class="item-details" @click="(event) => goToDetail(event, item.id)">
         <img class="item-img" :src="item.image" :alt="item.id" />
         <div class="item-info">
           <h5 class="item-street">{{ item.location.street }} {{ item.location.houseNumber }} {{
@@ -40,15 +40,7 @@ import DeleteModal from "./DeleteModal.vue";
 
 export default {
   name: "HouseList",
-
   props: ["houses"],
-
-  computed: {
-    houses() {
-      return this.houses
-    }
-  },
-
   components: {
     DeleteModal,
   },
@@ -64,7 +56,6 @@ export default {
     }
   }
 }
-
 </script>
 
 <style>
