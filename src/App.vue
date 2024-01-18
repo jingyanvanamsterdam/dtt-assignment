@@ -8,7 +8,8 @@
         <p>About</p>
       </router-link>
     </nav>
-    <div class="container">
-      <router-view />
-    </div>
+    
+  <div class="container">
+    <router-view />
+  </div>
 </template>

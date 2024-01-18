@@ -11,6 +11,9 @@ app.use(router).mount("#app");
 
 //set up global rules for form validation
 defineRule('required', value => {
+  if (typeof(value) === 'boolean'){
+    return true;
+  }
   if (!value) {
     return 'Required';
   }

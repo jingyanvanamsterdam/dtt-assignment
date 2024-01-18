@@ -33,7 +33,6 @@ export default {
       return theHouse ? theHouse : null
     },
     houseData() {
-      console.log(this.house)
       return {
         id: this.house.id,
         image: this.house.image,
@@ -65,7 +64,6 @@ export default {
 
   methods: {
     async handlePost(values, imageFile) {
-      console.log(values)
       const id = this.houseData.id
       try {
         await HTTP.postForm(`houses/${id}`, values)

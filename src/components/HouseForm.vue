@@ -122,6 +122,9 @@ export default {
   data() {
     const schema = {
       image(value) {
+        if (typeof(value) === 'string'){
+          return true;
+        }
         let allowedTypes = ['image/jpeg', 'image/png']
         if (!value) {
           return "Required"

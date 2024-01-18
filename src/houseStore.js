@@ -5,7 +5,9 @@ export const useHouseStore = createStore({
 
   state: () => {
     return {
-      houses: []
+      houses: [],
+      //favorites feature is not connected with api, so here set a tempt state.
+      favorites: [], 
     }
   },
 
@@ -24,6 +26,16 @@ export const useHouseStore = createStore({
 
     sortBySize(state) {
       state.houses.sort((a, b) => a.size - b.size)
+    },
+    
+    setFavorites(state, id) {
+      console.log("add", id)
+      state.favorites.push(id)
+    }, 
+
+    removeFavorites(state, id) {
+      console.log("remove", id)
+      state.favorites = state.favorites.filter((other_id) => other_id !== id)
     },
   },
 

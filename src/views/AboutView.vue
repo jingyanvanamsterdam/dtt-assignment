@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="about-container">
     <br>
     <h1>About DTT Real Estate</h1>
     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum
@@ -28,7 +28,7 @@
 </template>
 
 <style>
-.about p {
+.about-container p {
   font-family: 'Open sans', sans-serif;
   font-size: 18px;
   font-weight: 400;

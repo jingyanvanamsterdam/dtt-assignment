@@ -1,44 +1,50 @@
 <template>
-  <div class="container">
-    <!--Title-->
-    <div class="title">
-      <h1>Houses</h1>
-      <router-link to="/create-new-listing">
-        <button class="create-new" type="button">
-          <img src="../assets/images/ic_plus_white@3x.png" alt="icon">
-          CREATE NEW
-        </button>
-      </router-link>
-    </div>
-
-    <!--Search&Sort Line-->
-    <div class="search-filter">
-      <div class="sorting">
-        <div class="search-bar">
-          <img class="search-icon" src="../assets/images/ic_search@3x.png" alt="search">
-          <input type="search" placeholder="Search for a house" v-model="searchInput">
-        </div>
-        <Sorting />
-      </div>
-      <div v-show="this.searchInput.length > 0"> {{ searchResult }} </div>
-      <!--
-      <img class="noresult" src="../assets/images/img_empty_houses@3x.png">-->
-    </div>
-
-    <!--Houses container-->
-    <HouseList :houses="houses" />
+  <!--Title-->
+  <div class="title">
+    <h1>Houses</h1>
+    <router-link to="/create-new-listing">
+      <button class="create-new" type="button">
+        <img src="../assets/images/ic_plus_white@3x.png" alt="icon">
+        CREATE NEW
+      </button>
+    </router-link>
   </div>
+
+  <!--Search&Sort Line-->
+  <div class="search-filter">
+    <div class="sorting">
+      <div class="search-bar">
+        <img class="search-icon" src="../assets/images/ic_search@3x.png" alt="search">
+        <input type="search" placeholder="Search for a house" v-model="searchInput">
+      </div>
+      <Sorting />
+    </div>
+    <div class="results" v-if="this.searchInput.length > 0 && this.houses.length > 0"> {{ searchResult }} </div>
+    <div class="no-results" v-if="this.searchInput.length > 0 && this.houses.length === 0">
+      <img src="../assets/images/img_empty_houses@3x.png">
+      <p>No results found.</p>
+      <p>Please try another keyword.</p>
+    </div>
+  </div>
+
+  <!--Houses container-->
+  <div class="items-container">
+    <div class="item" v-for="item in houses" :key="item.id">
+      <HouseCard :house="item" />
+    </div>
+  </div>
+  <router-view/>
 </template>
 
 <script>
-import Sorting from "../components/Sorting.vue"; 
-import HouseList from "@/components/HouseList.vue";
+import Sorting from "../components/Sorting.vue";
+import HouseCard from "@/components/HouseCard.vue";
 
 export default {
   name: "HomeView",
   components: {
     Sorting,
-    HouseList,
+    HouseCard,
   },
   data() {
     return {
@@ -77,7 +83,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 15% 0px;
+  padding: 30px 0px 0px;
 }
 
 .title h1 {
@@ -108,7 +114,7 @@ export default {
 
 /* Search and sorting line */
 .search-filter {
-  margin: 20px 15%;
+  margin: 20px 0px;
 }
 
 .sorting {
@@ -144,15 +150,21 @@ export default {
 
 .search-bar img {
   width: 5%;
-  padding: 10px; 
+  padding: 10px;
   background-color: #E8E8E8;
 }
 
-.noresult {
-  width: 100%;
-  margin: 3em; 
-  display: block;
-  align-items: center;
+.results {
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  margin: 20px 0px;
 }
 
+.no-results {
+  text-align: center;
+}
+.no-results img {
+  width: 30%;
+}
 </style>
