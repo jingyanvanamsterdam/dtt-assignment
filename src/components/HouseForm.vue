@@ -10,7 +10,7 @@
     <div class="houseNum-row">
       <div class="houseNumber">
         <label for="house number">House number*</label>
-        <Field name="houseNumber" type="number" :value="houseData.location.houseNumber"
+        <Field name="houseNumber" type="text" :value="houseData.location.houseNumber"
           :class="{ 'is-invalid': errors.houseNumber }" />
         <ErrorMessage class="errors" name="houseNumber" />
       </div>
@@ -54,7 +54,7 @@
     <div class="price">
       <label for="price">Price*</label>
       <div class="price-input-wrapper">
-        <Field name="price" type="number" :value="houseData.price" :class="{ 'is-invalid': errors.price }" />
+        <Field name="price" type="text" :value="houseData.price" :class="{ 'is-invalid': errors.price }" />
         <span class="price-unit"> € </span>
       </div>
       <ErrorMessage class="errors" name="price" />
@@ -64,7 +64,7 @@
       <div class="size">
         <label for="size">Size*</label>
         <div class="size-input-wrapper">
-          <Field name="size" type="number" :value="houseData.size" :class="{ 'is-invalid': errors.size }" />
+          <Field name="size" type="text" :value="houseData.size" :class="{ 'is-invalid': errors.size }" />
           <span class="size-unit">m²</span>
         </div>
         <ErrorMessage class="errors" name="size" />
@@ -82,13 +82,12 @@
     <div class="bed-bath">
       <div class="bedroom">
         <label for="bedrooms">Bedrooms*</label>
-        <Field name="bedrooms" type="number" :value="houseData.rooms.bedrooms"
-          :class="{ 'is-invalid': errors.bedrooms }" />
+        <Field name="bedrooms" type="text" :value="houseData.rooms.bedrooms" :class="{ 'is-invalid': errors.bedrooms }" />
         <ErrorMessage class="errors" name="bedrooms" />
       </div>
       <div class="bathroom">
         <label for="bathrooms">Bathrooms*</label>
-        <Field name="bathrooms" type="number" :value="houseData.rooms.bathrooms"
+        <Field name="bathrooms" type="text" :value="houseData.rooms.bathrooms"
           :class="{ 'is-invalid': errors.bathrooms }" />
         <ErrorMessage class="errors" name="bathrooms" />
       </div>
@@ -96,7 +95,7 @@
 
     <div class="construction-year">
       <label for="constructionYear">Construction year*</label>
-      <Field name="constructionYear" type="number" :value="houseData.constructionYear"
+      <Field name="constructionYear" type="text" :value="houseData.constructionYear"
         :class="{ 'is-invalid': errors.constructionYear }" />
       <ErrorMessage class="errors" name="constructionYear" />
     </div>
@@ -116,29 +115,32 @@
 
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
-import * as Yup from 'yup';
 
 export default {
   name: "HouseForm",
   props: ['handleAfterSubmit', 'initialHouseData', 'buttonLabel'],
   data() {
-    const schema = Yup.object().shape({
-      image: Yup.mixed().required("Required"),
-      price: Yup.number("Must be a number").positive("Must be a positive number").required('Required'),
-      bedrooms: Yup.number('Must be a number.').positive("Must be a positive number").required('Required'),
-      bathrooms: Yup.number('Must be a number.').positive("Must be a positive number").required('Required'),
-      size: Yup.number('Must be a number.').positive('Must be a positive number.').required('Required'),
-      description: Yup.string().required('Required'),
-      streetName: Yup.string().required('Required'),
-      houseNumber: Yup.number("Must be a number").positive("Must be a positive number").required('Required'),
-      numberAddition: Yup.string(),
-      city: Yup.string().required('Required'),
-      zip: Yup.string().required('Required')
-        .matches(/[0-9]{4}\s?[A-Z]{2}/, "Must be 4 digits with two uppercase letters"),
-      constructionYear: Yup.number("Must be a valid year.").required('Required')
-        .min(1901, "Must be not earlier than 1901.").max(2023, "Must be a valid year."),
-      hasGarage: Yup.boolean().required('Required'),
-    });
+    const schema = {
+      image(value) {
+        let allowedTypes = ['image/jpeg', 'image/png']
+        if (!value) {
+          return "Required"
+        } else if (!allowedTypes.includes(value.type)) {
+          return "Must be a jpeg or png"
+        } else { return true }
+      },
+      price: 'required|positiveInt',
+      bedrooms: 'required|positiveInt',
+      bathrooms: 'required|positiveInt',
+      size: 'required|positiveInt',
+      description: 'required',
+      streetName: 'required',
+      houseNumber: 'required|positiveInt',
+      city: 'required',
+      zip: 'required|zip',
+      constructionYear: 'required|year|positiveInt',
+      hasGarage: 'required',
+    }
 
     const houseData = this.initialHouseData ? this.initialHouseData : {
       image: null,
@@ -184,6 +186,8 @@ export default {
       this.$refs.imageInput.click();
     },
     handleSubmit(values) {
+      //To modify user's input format of postcode
+      values.zip = values.zip.toUpperCase().replace(" ", "")
       //image submission is handled separately by api: 
       const imageFile = values.image;
       delete values.image;
