@@ -1,6 +1,5 @@
 <template>
   <div class="about-container">
-    <br>
     <h1>About DTT Real Estate</h1>
     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum
       sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,
@@ -20,7 +19,7 @@
     <div class="about-signature">
       <img src="../assets/images/img_logo_dtt@3x.png">
       <div class="about-signature-web">
-        <h5>By DTT</h5>
+        <h2>By DTT</h2>
         <a href="https://www.d-tt.nl"> www.d-tt.nl</a>
       </div>
     </div>
@@ -41,7 +40,7 @@
   justify-content: flex-start;
 }
 
-.about-signature h5 {
+.about-signature h2 {
   margin: 0px;
 }
 
@@ -49,5 +48,11 @@
   width: 200px;
   height: auto;
   margin-right: 10px;
+}
+
+@media screen and (max-width: 576px) {
+  .about-container p {
+    font-size: 12px;
+  }
 }
 </style>

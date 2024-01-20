@@ -9,8 +9,8 @@
       <p>Are you sure you want to delete this listing?</p>
       <p>This action cannot be undone. </p>
       <br>
-      <button class="button-yes"  @click.prevent.stop="handleDelete">YES, DELETE</button>
-      <button class="button-goback"  @click.prevent.stop="cancel">GO BACK</button>
+      <button class="button-yes" @click.prevent.stop="handleDelete">YES, DELETE</button>
+      <button class="button-goback" @click.prevent.stop="cancel">GO BACK</button>
       <!--move methods from HomePage and House Detail to DeleteModal because in HomePage, showModal's value is linked to every item which is deletable and it always delete the last item on the screen-->
     </div>
   </div>
@@ -106,5 +106,12 @@ export default {
 
 .button-goback {
   background-color: #4A4B4C;
+}
+
+@media screen and (max-width: 576px) {
+  .delete-content button {
+    width: 50%; 
+  }
+
 }
 </style>

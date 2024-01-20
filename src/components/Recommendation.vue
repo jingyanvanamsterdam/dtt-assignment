@@ -1,5 +1,5 @@
 <template>
-  <h1>Recommended</h1>
+  <h3>Recommended for you</h3>
   <div class="item" v-for="item in recommendation">
     <HouseCard :house="item" :isRecommendation="true" />
   </div>
@@ -32,3 +32,10 @@ export default {
   }
 }
 </script>
+
+<style>
+.recomd-box h3 {
+  margin: 0px; 
+}
+
+</style>

@@ -11,20 +11,21 @@
   </div>
 
   <!--Search&Sort Line-->
-  <div class="search-filter">
-    <div class="sorting">
-      <div class="search-bar">
-        <img class="search-icon" src="../assets/images/ic_search@3x.png" alt="search">
-        <input type="search" placeholder="Search for a house" v-model="searchInput">
-      </div>
-      <Sorting />
+  <div class="sorting">
+    <div class="search-bar">
+      <img class="search-icon" src="../assets/images/ic_search@3x.png" alt="search">
+      <input type="search" placeholder="Search for a house" v-model="searchInput">
     </div>
-    <div class="results" v-if="this.searchInput.length > 0 && this.houses.length > 0"> {{ searchResult }} </div>
-    <div class="no-results" v-if="this.searchInput.length > 0 && this.houses.length === 0">
-      <img src="../assets/images/img_empty_houses@3x.png">
-      <p>No results found.</p>
-      <p>Please try another keyword.</p>
-    </div>
+    <Sorting />
+  </div>
+  <div class="results" v-if="this.searchInput.length > 0 && this.houses.length > 0">
+    {{ searchResult }}
+  </div>
+  <!-- Show Results -->
+  <div class="no-results" v-if="this.searchInput.length > 0 && this.houses.length === 0">
+    <img src="../assets/images/img_empty_houses@3x.png">
+    <p>No results found.</p>
+    <p>Please try another keyword.</p>
   </div>
 
   <!--Houses container-->
@@ -33,7 +34,6 @@
       <HouseCard :house="item" />
     </div>
   </div>
-  <router-view/>
 </template>
 
 <script>
@@ -83,11 +83,9 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 0px 0px;
 }
-
 .title h1 {
-  margin: 0;
+  margin: 0px; 
 }
 
 .create-new,
@@ -95,16 +93,15 @@ export default {
   background-color: #EB5440;
   color: #FFFFFF;
   border: none;
-  border-radius: 8px;
+  border-radius: 0.5em;
   padding: 10px 10px;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 1em;
   display: flex;
   align-items: center;
   justify-content: space-around;
-
 }
 
 .create-new img {
@@ -113,24 +110,26 @@ export default {
 }
 
 /* Search and sorting line */
-.search-filter {
-  margin: 20px 0px;
-}
-
 .sorting {
   display: flex;
   justify-content: space-between;
+  margin: 1.5em 0em;
 }
 
 .search-bar {
   background-color: #E8E8E8;
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
-  font-size: 14px;
-  border-radius: 5px;
+  border-radius: 0.5em;
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+
+.search-bar img {
+  width: 7%;
+  margin: 0.7em;
+  background-color: #E8E8E8;
 }
 
 .search-bar input[type="search"] {
@@ -138,7 +137,7 @@ export default {
   font-weight: 400;
   font-size: 14px;
   width: 100%;
-  padding: 10px 0px;
+  padding: 0.7em 0em;
   border: none;
   background-color: transparent;
   color: #c3c3c3f3;
@@ -148,23 +147,60 @@ export default {
   outline: none;
 }
 
-.search-bar img {
-  width: 5%;
-  padding: 10px;
-  background-color: #E8E8E8;
-}
-
+/* Results style */
 .results {
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 0.89em;
+  font-weight: bold;
   font-family: 'Montserrat', sans-serif;
-  margin: 20px 0px;
+  margin: 1em 0em;
 }
 
 .no-results {
   text-align: center;
 }
+
 .no-results img {
   width: 30%;
+  padding-bottom: 1em;
+}
+
+.no-results p {
+  font-size: 1em;
+  margin: 0em;
+}
+
+.items-container {
+  margin: 1em 0em;
+  padding-bottom: 1em;
+}
+
+@media screen and (max-width: 576px) {
+  .sorting {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 1.5em 0em;
+  }
+
+  .search-bar input[type="search"] {
+    font-size: 1em;
+  }
+
+  .results {
+    font-size: 1em;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    margin: 1em 0em;
+  }
+
+  .no-results p {
+    font-size: 14px;
+  }
+
+  .no-results img {
+    width: 50%;
+    padding-bottom: 1em;
+  }
+
 }
 </style>

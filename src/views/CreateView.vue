@@ -1,10 +1,8 @@
 <template>
-  <div class="form-container">
-    <div class="form">
-      <GoBack route="/" showString="Back to overview" />
-      <h3>Create new listing</h3>
-      <HouseForm :handleAfterSubmit="handlePost" buttonLabel="Save" />
-    </div>
+  <div class="form">
+    <GoBack route="/" showString="Back to overview" />
+    <h2>Create new listing</h2>
+    <HouseForm :handleAfterSubmit="handlePost" buttonLabel="Post" />
   </div>
 </template>
 
@@ -21,10 +19,10 @@ export default {
 
   methods: {
     async handlePost(values, imageFile) {
-        const response = await HTTP.postForm("houses", values)
-        const houseId = response.data.id
-        await HTTP.postForm(`houses/${houseId}/upload`, { image: imageFile })
-        this.$router.push(`/house-details/${houseId}`) 
+      const response = await HTTP.postForm("houses", values)
+      const houseId = response.data.id
+      await HTTP.postForm(`houses/${houseId}/upload`, { image: imageFile })
+      this.$router.push(`/house-details/${houseId}`)
     }
   }
 }

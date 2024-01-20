@@ -1,10 +1,10 @@
 <template>
   <div class="item-details" @click="goToDetail">
     <img class="item-img" :src="house.image" :alt="house.id" />
-<!--House info-->
+    <!--House info-->
     <div class="item-info">
-      <h5 class="item-street">{{ house.location.street }} {{ house.location.houseNumber }} {{
-        house.location.houseNumberAddition }}</h5>
+      <p class="item-street">{{ house.location.street }} {{ house.location.houseNumber }} {{
+        house.location.houseNumberAddition }}</p>
       <p class="item-price">€ {{ house.price }}</p>
       <p class="item-location">{{ house.location.zip }} {{ house.location.city }}</p>
       <div class="item-info-bbg">
@@ -22,8 +22,8 @@
         </div>
       </div>
     </div>
-    <FavoriteButton v-show="!house.madeByMe && !isRecommendation" :itemId="house.id"/>
-<!--Edits-->
+    <FavoriteButton v-show="!house.madeByMe && !isRecommendation" :itemId="house.id" />
+    <!--Edits-->
     <div class="edits" v-show="house.madeByMe">
       <button class="icon-button" @click.prevent.stop="goToEdit">
         <img src="../assets/images/ic_edit@3x.png">
@@ -44,7 +44,7 @@ export default {
   components: {
     DeleteModal,
     FavoriteButton
-},
+  },
   methods: {
     goToDetail(event) {
       //if statement conditions that when delete modal is shown and click empty space will not trigger to router to detail page
@@ -60,17 +60,13 @@ export default {
 </script>
 
 <style>
-/*Items container*/
-.items-container {
-  margin: 20px 0px;
-  padding-bottom: 20px;
-}
-
+/*listing information: font-size: 16px, except street line, font should be open sans */
+/* Responsive with different containers: item-container and recommendation*/
 .item {
   background-color: #FFFFFF;
-  padding: 10px;
-  margin: 10px 0px;
-  border-radius: 5px;
+  padding: 0.8em;
+  margin: 0.8em 0em;
+  border-radius: 0.5em;
 }
 
 .item-details {
@@ -79,61 +75,55 @@ export default {
 }
 
 .item-img {
-  width: 100px;
-  height: 100px;
+  width: 5.5em;
+  height: 5.5em;
   object-fit: cover;
   object-position: center;
-  border-radius: 10px;
-  margin-left: 0px;
-  margin-right: 10px;
+  border-radius: 0.5em;
+  margin-right: 0.5em;
 
 }
 
 .item-info {
   flex: 2;
-  height: auto;
+  height: 5.5em;
+  margin-left: 0.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
-
-.item-info h5,
 .item-info p {
-  margin: 5px;
-  padding: auto;
-}
-
-.item-location {
-  font-size: 14px;
-  color: #C3C3C3;
+  margin: 0px;
   font-family: 'Open Sans', sans-serif;
 }
 
+.item-location {
+  font-size: 0.78em;
+  color: #C3C3C3;
+}
+
 .item-street {
-  font-size: 16px;
+  font-size: 0.89em;
   font-weight: 600;
   font-family: 'Montserrat', sans-serif;
 }
 
 .item-price {
-  font-size: 14px;
+  font-size: 0.78em;
   color: #4A4B4C;
-  font-family: 'Open Sans', sans-serif;
 }
 
 .item-info-bbg {
   display: flex;
-
-}
-
-.item-info-bbg {
-  font-size: 12px;
-  font-family: 'Open Sans', sans-serif;
+  font-size: 0.67em;
   color: #4A4B4C;
 }
 
 .img-small {
-  width: 15px;
-  height: 15px;
-  margin-right: 5px;
+  width: 0.67em;
+  height: 0.67em;
+  margin-right: 0.67em;
 }
 
 .item-info-bbg-bed,
@@ -141,6 +131,34 @@ export default {
 .item-info-bbg-size {
   display: flex;
   align-items: center;
-  margin-right: 10px;
+  margin-right: 0.5em;
+}
+
+/*Delete&edit icon Style*/
+.icon-button {
+  border: none;
+  background: none;
+  margin: 0.5em;
+  cursor: pointer;
+}
+
+.icon-button img {
+  width: 1.5em;
+  height: auto;
+}
+
+@media screen and (max-width: 576px) {
+  .item-info p,
+  .item-info-bbg {
+    font-size: 1em;
+  }
+
+.icon-button img {
+  width: 1.2em;
+  height: auto;
+}
+.icon-button {
+  padding: 0em; 
+}
 }
 </style>

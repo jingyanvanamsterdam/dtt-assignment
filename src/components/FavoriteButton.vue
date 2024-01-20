@@ -23,16 +23,18 @@ export default {
 
 <style>
 .fav {
-  width: 16px;
+  width: 1.5em;
   height: auto; 
   border: 2px dashed #C3C3C3;
   margin-left: auto;
+  margin: 0.5em;
+  cursor: pointer;
 }
 .fav:hover {
   border: 2px solid #EB5440; 
 }
 .is-fav {
   background-color: #EB5440;
-  border: 2px dashed #EB5440;
+  border: 2px solid #EB5440;
 }
 </style>
