@@ -1,21 +1,20 @@
 <template>
-    <img title="favorite" class="fav" src="../assets/images/img_star@3x.png" :class="{ 'is-fav': isFav}" @click.prevent.stop="toggleFav"/>
-<!--if is-fav, the icon style will has color, hover over also show text what is it-->
+  <i class="fav" :class="['fa-star', isFav ? 'fas' : 'far']" @click.prevent.stop="toggleFav"></i>
 </template>
 
 <script>
 export default {
   name: "FavoriteButton",
-  props: ["itemId"], 
+  props: ["itemId"],
   methods: {
-    toggleFav(){
+    toggleFav() {
       this.isFav ? this.$store.commit('removeFavorites', this.itemId) : this.$store.commit('setFavorites', this.itemId)
       console.log(this.$store.state.favorites, this.$store.state.houses)
     }
-  }, 
-  computed:{
-    isFav(){
-      return this.$store.state.favorites.includes(this.itemId) 
+  },
+  computed: {
+    isFav() {
+      return this.$store.state.favorites.includes(this.itemId)
     }
   }
 }
@@ -23,18 +22,20 @@ export default {
 
 <style>
 .fav {
-  width: 1.5em;
-  height: auto; 
-  border: 2px dashed #C3C3C3;
   margin-left: auto;
   margin: 0.5em;
   cursor: pointer;
 }
-.fav:hover {
-  border: 2px solid #EB5440; 
+
+.fa-star.far {
+  color: #C3C3C3;
+  font-size: 1.5em;
+  cursor: pointer;
 }
-.is-fav {
-  background-color: #EB5440;
-  border: 2px solid #EB5440;
+
+.fa-star.fas {
+  color: #EB5440;
+  font-size: 1.5em;
+  cursor: pointer;
 }
 </style>

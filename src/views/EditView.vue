@@ -1,8 +1,10 @@
 <template>
   <div v-if="house" class="form">
-    <GoBack :route="`/house-details/${house.id}`" showString="Back to detail page" />
-    <h2>Edit listing</h2>
-    <HouseForm :initialHouseData="houseData" :handleAfterSubmit="handlePost" buttonLabel="Save" />
+    <div class="form-box">
+      <GoBack :route="`/house-details/${house.id}`" showString="Back to detail page" />
+      <h2>Edit listing</h2>
+      <HouseForm :initialHouseData="houseData" :handleAfterSubmit="handlePost" buttonLabel="Save" />
+    </div>
   </div>
 </template>
 

@@ -26,7 +26,6 @@ export default {
           recommendation.push(houses[r])
         }
       };
-
       return recommendation
     }
   }
@@ -35,7 +34,6 @@ export default {
 
 <style>
 .recomd-box h3 {
-  margin: 0px; 
+  margin: 0px;
 }
-
 </style>

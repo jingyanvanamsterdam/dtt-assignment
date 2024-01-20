@@ -2,33 +2,35 @@
   <div class="item-details" @click="goToDetail">
     <img class="item-img" :src="house.image" :alt="house.id" />
     <!--House info-->
-    <div class="item-info">
-      <p class="item-street">{{ house.location.street }} {{ house.location.houseNumber }} {{
-        house.location.houseNumberAddition }}</p>
-      <p class="item-price">€ {{ house.price }}</p>
-      <p class="item-location">{{ house.location.zip }} {{ house.location.city }}</p>
-      <div class="item-info-bbg">
-        <div class="item-info-bbg-bed">
-          <img class="img-small" src="../assets/images/ic_bed@3x.png" />
-          <p>{{ house.rooms.bedrooms }}</p>
-        </div>
-        <div class="item-info-bbg-bath">
-          <img class="img-small" src="../assets/images/ic_bath@3x.png" />
-          <p>{{ house.rooms.bathrooms }}</p>
-        </div>
-        <div class="item-info-bbg-size">
-          <img class="img-small" src="../assets/images/ic_size@3x.png" />
-          <p>{{ house.size }} m2</p>
+    <div class="info-icon-wrapper">
+      <div class="item-info">
+        <p class="item-street">{{ house.location.street }} {{ house.location.houseNumber }} {{
+          house.location.houseNumberAddition }}</p>
+        <p class="item-price">€ {{ house.price }}</p>
+        <p class="item-location">{{ house.location.zip }} {{ house.location.city }}</p>
+        <div class="item-info-bbg">
+          <div class="item-info-bbg-bed">
+            <img class="img-small" src="../assets/images/ic_bed@3x.png" />
+            <p>{{ house.rooms.bedrooms }}</p>
+          </div>
+          <div class="item-info-bbg-bath">
+            <img class="img-small" src="../assets/images/ic_bath@3x.png" />
+            <p>{{ house.rooms.bathrooms }}</p>
+          </div>
+          <div class="item-info-bbg-size">
+            <img class="img-small" src="../assets/images/ic_size@3x.png" />
+            <p>{{ house.size }} m2</p>
+          </div>
         </div>
       </div>
-    </div>
-    <FavoriteButton v-show="!house.madeByMe && !isRecommendation" :itemId="house.id" />
-    <!--Edits-->
-    <div class="edits" v-show="house.madeByMe">
-      <button class="icon-button" @click.prevent.stop="goToEdit">
-        <img src="../assets/images/ic_edit@3x.png">
-      </button>
-      <DeleteModal :itemId="house.id" />
+      <!--icons-->
+      <FavoriteButton v-show="!house.madeByMe && !isRecommendation" :itemId="house.id" />
+      <div class="edits" v-show="house.madeByMe">
+        <button class="icon-button" @click.prevent.stop="goToEdit">
+          <img src="../assets/images/ic_edit@3x.png">
+        </button>
+        <DeleteModal :itemId="house.id" />
+      </div>
     </div>
   </div>
 </template>
@@ -71,7 +73,7 @@ export default {
 
 .item-details {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .item-img {
@@ -84,10 +86,15 @@ export default {
 
 }
 
+.info-icon-wrapper {
+  flex: 2;
+  display: flex;
+  align-items: flex-start;
+}
+
 .item-info {
   flex: 2;
-  height: 5.5em;
-  margin-left: 0.5em;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -112,6 +119,13 @@ export default {
 .item-price {
   font-size: 0.78em;
   color: #4A4B4C;
+}
+
+.item-street,
+.item-location,
+.item-price,
+.item-info-bbg {
+  padding: 0.15em 0.5em;
 }
 
 .item-info-bbg {
@@ -148,17 +162,18 @@ export default {
 }
 
 @media screen and (max-width: 576px) {
+
   .item-info p,
   .item-info-bbg {
     font-size: 1em;
   }
 
-.icon-button img {
-  width: 1.2em;
-  height: auto;
-}
-.icon-button {
-  padding: 0em; 
-}
-}
-</style>
+  .icon-button img {
+    width: 1.2em;
+    height: auto;
+  }
+
+  .icon-button {
+    padding: 0em;
+  }
+}</style>

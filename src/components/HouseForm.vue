@@ -109,9 +109,10 @@
         placeholder="Enter Description" />
       <ErrorMessage class="errors" name="description" />
     </div>
-
-    <div class="submit">
-      <button type="submit">{{ buttonLabel }}</button>
+    <div class="submit-wrapper">
+      <div class="submit">
+        <button type="submit">{{ buttonLabel }}</button>
+      </div>
     </div>
   </Form>
 </template>
@@ -207,7 +208,6 @@ export default {
 <style>
 /*Form (CreateView&EditView) Style*/
 .form {
-  margin: 0px;
   background-image: url('../assets/images/img_background@3x.png');
   background-size: cover;
   opacity: 0.9;
@@ -228,7 +228,7 @@ label {
   margin: 20px 0 10px;
 }
 
-input {
+.form input {
   width: 320px;
   height: 40px;
   border: none;
@@ -310,8 +310,16 @@ select {
   flex-direction: column;
 }
 
+
+.submit-wrapper {
+  width: 320px;
+  display: flex
+}
+
 .submit {
   margin-top: 20px;
+  margin-left: auto;
+  justify-content: flex-end;
 }
 
 .submit button {
@@ -366,5 +374,11 @@ select {
 .upload-box {
   border: 2px dashed #C3C3C3;
   padding: 20px;
+}
+
+@media screen and (max-width: 576px) {
+  .submit button {
+    width: 320px;
+  }
 }
 </style>

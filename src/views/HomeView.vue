@@ -1,37 +1,41 @@
 <template>
-  <!--Title-->
-  <div class="title">
-    <h1>Houses</h1>
-    <router-link to="/create-new-listing">
-      <button class="create-new" type="button">
-        <img src="../assets/images/ic_plus_white@3x.png" alt="icon">
-        CREATE NEW
-      </button>
-    </router-link>
-  </div>
-
-  <!--Search&Sort Line-->
-  <div class="sorting">
-    <div class="search-bar">
-      <img class="search-icon" src="../assets/images/ic_search@3x.png" alt="search">
-      <input type="search" placeholder="Search for a house" v-model="searchInput">
+  <div class="home-box">
+    <!--Title-->
+    <div class="title">
+      <h1>Houses</h1>
+      <router-link to="/create-new-listing">
+        <button class="create-new" type="button">
+          <img src="../assets/images/ic_plus_white@3x.png" alt="icon">
+          CREATE NEW
+        </button>
+      </router-link>
     </div>
-    <Sorting />
-  </div>
-  <div class="results" v-if="this.searchInput.length > 0 && this.houses.length > 0">
-    {{ searchResult }}
-  </div>
-  <!-- Show Results -->
-  <div class="no-results" v-if="this.searchInput.length > 0 && this.houses.length === 0">
-    <img src="../assets/images/img_empty_houses@3x.png">
-    <p>No results found.</p>
-    <p>Please try another keyword.</p>
-  </div>
 
-  <!--Houses container-->
-  <div class="items-container">
-    <div class="item" v-for="item in houses" :key="item.id">
-      <HouseCard :house="item" />
+    <!--Search&Sort Line-->
+    <div class="sorting">
+      <div class="search-bar">
+        <img class="search-icon" src="../assets/images/ic_search@3x.png" alt="search">
+        <input type="search" placeholder="Search for a house" v-model="searchInput">
+        <img class="clear-icon" src="../assets/images/ic_clear@3x.png" alt="clear" v-if="searchInput"
+          @click="clearSearch" />
+      </div>
+      <Sorting />
+    </div>
+    <div class="results" v-if="this.searchInput.length > 0 && this.houses.length > 0">
+      {{ searchResult }}
+    </div>
+    <!-- Show Results -->
+    <div class="no-results" v-if="this.searchInput.length > 0 && this.houses.length === 0">
+      <img src="../assets/images/img_empty_houses@3x.png">
+      <p>No results found.</p>
+      <p>Please try another keyword.</p>
+    </div>
+
+    <!--Houses container-->
+    <div class="items-container">
+      <div class="item" v-for="item in houses" :key="item.id">
+        <HouseCard :house="item" />
+      </div>
     </div>
   </div>
 </template>
@@ -49,6 +53,11 @@ export default {
   data() {
     return {
       searchInput: "",
+    }
+  },
+  methods: {
+    clearSearch() {
+      this.searchInput = ""
     }
   },
   computed: {
@@ -84,8 +93,9 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
+
 .title h1 {
-  margin: 0px; 
+  margin: 0px;
 }
 
 .create-new,
@@ -122,13 +132,14 @@ export default {
   font-weight: 600;
   border-radius: 0.5em;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
+  padding: 0.7em;
 }
 
 .search-bar img {
-  width: 7%;
-  margin: 0.7em;
+  width: 1em;
+  height: auto;
   background-color: #E8E8E8;
 }
 
@@ -137,14 +148,26 @@ export default {
   font-weight: 400;
   font-size: 14px;
   width: 100%;
-  padding: 0.7em 0em;
+  padding-left: 0.5em;
   border: none;
   background-color: transparent;
   color: #c3c3c3f3;
+  flex-grow: 1;
 }
 
 .search-bar input:focus {
   outline: none;
+}
+
+/*To remove the browser default clear icon */
+.search-bar input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.search-bar input[type="search"]::-moz-search-clear-button,
+.search-bar input[type="search"]::-ms-clear {
+  display: none;
 }
 
 /* Results style */

@@ -1,8 +1,10 @@
 <template>
   <div class="form">
-    <GoBack route="/" showString="Back to overview" />
-    <h2>Create new listing</h2>
-    <HouseForm :handleAfterSubmit="handlePost" buttonLabel="Post" />
+    <div class="form-box">
+      <GoBack route="/" showString="Back to overview" />
+      <h2>Create new listing</h2>
+      <HouseForm :handleAfterSubmit="handlePost" buttonLabel="Post" />
+    </div>
   </div>
 </template>
 

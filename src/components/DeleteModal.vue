@@ -110,7 +110,7 @@ export default {
 
 @media screen and (max-width: 576px) {
   .delete-content button {
-    width: 50%; 
+    width: 50%;
   }
 
 }

@@ -158,6 +158,23 @@ export default {
   margin: 0px;
 }
 
+/*Give a media response to ipad screen */
+@media screen and (max-width: 768px) {
+  .hd-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .hd-contents,
+  .recomd-box {
+    width: 100%;
+  }
+
+  .recomd-box {
+    margin-top: 1em;
+  }
+}
+
 @media screen and (max-width: 576px) {
   .hd-box {
     display: flex;

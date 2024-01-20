@@ -46,19 +46,22 @@ export default {
   border-top-right-radius: 0.5em;
 }
 
+.price-filter:hover,
+.size-filter:hover,
 .price-filter:focus,
 .size-filter:focus {
   background-color: #EB5440;
 }
 
 @media screen and (max-width: 576px) {
+
   .price-filter,
   .size-filter {
     font-size: 12px;
     font-family: 'Montserrat', sans-serif;
-    height: 3em; 
-    width: 50%; 
-    margin-top: 1em; 
+    height: 3em;
+    width: 50%;
+    margin-top: 1em;
   }
 }
 </style>

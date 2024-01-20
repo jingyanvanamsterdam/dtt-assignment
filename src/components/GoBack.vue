@@ -31,14 +31,16 @@ export default {
   font-size: 16px;
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
-  margin: 0em; 
+  margin: 0em;
 }
+
 @media screen and (max-width: 576px) {
   .go-back p {
     font-size: 12px;
   }
+
   .go-back img {
-    width: 12px; 
+    width: 12px;
   }
 }
 </style>

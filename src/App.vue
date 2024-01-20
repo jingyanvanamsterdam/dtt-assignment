@@ -62,7 +62,10 @@ a:-webkit-any-link {
   margin-right: 5%;
 }
 
-.container {
+.home-box,
+.about-box,
+.hd,
+.form-box {
   margin-top: 7em;
   margin-left: 15%;
   margin-right: 15%;
@@ -72,21 +75,18 @@ a:-webkit-any-link {
   .navbar-default {
     margin: 0 !important;
   }
-/*
-  nav a p, 
-  nav a.router-link-active p{
-    display: none;
-}*/
 
   .logo {
     margin-left: 1.5em;
   }
 
-  .container {
+  .home-box,
+  .about-box,
+  .hd,
+  .form-box {
     margin-top: 5.5em;
     margin-left: 1.5em;
     margin-right: 1.5em;
   }
-
 }
 </style>
