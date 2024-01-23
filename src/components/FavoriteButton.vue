@@ -8,15 +8,14 @@ export default {
   props: ["itemId"],
   methods: {
     toggleFav() {
-      this.isFav ? this.$store.commit('removeFavorites', this.itemId) : this.$store.commit('setFavorites', this.itemId)
-      console.log(this.$store.state.favorites, this.$store.state.houses)
+      this.isFav ? this.$store.commit('removeFavorites', this.itemId) : this.$store.commit('setFavorites', this.itemId); 
     }
   },
   computed: {
     isFav() {
       return this.$store.state.favorites.includes(this.itemId)
     }
-  }
+  }, 
 }
 </script>
 
