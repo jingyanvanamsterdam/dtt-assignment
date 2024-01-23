@@ -6,8 +6,8 @@ export const useHouseStore = createStore({
   state: () => {
     return {
       houses: [],
-      //favorites feature is not connected with api, so here set a tempt state.
-      favorites: [],
+      //favorites will be stored at local storage
+      favorites: JSON.parse(localStorage.getItem('favorites')) || [],
     }
   },
 
@@ -29,13 +29,15 @@ export const useHouseStore = createStore({
     },
 
     setFavorites(state, id) {
-      console.log("add", id)
-      state.favorites.push(id)
+      state.favorites.push(id); 
+      //set the new value to localStorage
+      localStorage.setItem('favorites', JSON.stringify(state.favorites))
     },
 
     removeFavorites(state, id) {
-      console.log("remove", id)
-      state.favorites = state.favorites.filter((other_id) => other_id !== id)
+      state.favorites = state.favorites.filter((other_id) => other_id !== id); 
+      //set the new value to localStorage
+      localStorage.setItem('favorites', JSON.stringify(state.favorites))
     },
   },
 
@@ -50,5 +52,5 @@ export const useHouseStore = createStore({
     /*remove the actions of create, edit and delete:
       1. when the component handle event to make changes in api, and then the components will be re-rendered, at the created life cycle, the new data is fetched. so no need to have them in the store. 
     */
-  }
+  }, 
 })
