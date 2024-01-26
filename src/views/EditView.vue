@@ -64,14 +64,16 @@ export default {
 
   methods: {
     async handlePost(values, imageFile) {
-      const id = this.houseData.id
+      const id = this.houseData.id;
       try {
-        await HTTP.postForm(`houses/${id}`, values)
+        await HTTP.postForm(`houses/${id}`, values);
         //If image was not changed, it will be a url/string. Else it will be a File object and we need to upload that object
         if (imageFile instanceof File) {
           await HTTP.postForm(`houses/${id}/upload`, { image: imageFile })
-        }
-        this.$router.replace(`/house-details/${id}`)
+        };
+        /*To inform the store to update the changes of data at api, if the view does not set houses every time after the component is created. 
+        this.$store.dispatch('housesModule/fetchHouses');*/
+        this.$router.replace(`/house-details/${id}`);
       } catch (error) {
         console.log('error', error)
       }

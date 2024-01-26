@@ -33,9 +33,11 @@ export default {
     },
     handleDelete(id) {
       HTTP.delete(`houses/${id}`).then(() => {
-        //To make the store change the state and then render, because the router is going to the home view and it needed to be informed the state is changed. 
+        /*To make the store change the state and then render, because the router is going to the home view and it needed to be informed the state is changed. 
         this.$store.commit("houseModule/deleteListing", id);
-        this.$router.replace('/')
+        But here dispatch the fetchHouses, so the state will be changed and Home View will be rerendered*/
+        this.$store.dispatch('housesModule/fetchHouses');
+        this.$router.replace('/');
       }).catch((error) => {
         console.log('error', error)
       })

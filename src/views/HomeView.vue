@@ -75,12 +75,10 @@ export default {
         })
       }
     },
-
     searchResult() {
       return this.houses.length === 1 ? " 1 result found " : `${this.houses.length} results found`
     },
   },
-
   created() {
     this.$store.dispatch('housesModule/fetchHouses');
   }
