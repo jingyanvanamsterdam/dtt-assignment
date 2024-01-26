@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import { useHouseStore } from '@/houseStore';
+import { useHouseStore } from '@/store/theStore';
 import { defineRule } from 'vee-validate';
 import "./assets/main.css"
 

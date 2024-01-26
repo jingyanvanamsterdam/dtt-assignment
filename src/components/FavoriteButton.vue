@@ -1,5 +1,5 @@
 <template>
-  <i class="fav" :class="['fa-star', isFav ? 'fas' : 'far']" @click.prevent.stop="toggleFav"></i>
+  <i class="fav" :class="['fa-star', isFav ? 'fas' : 'far']" @click.prevent.stop="toggleFav(itemId)"></i>
 </template>
 
 <script>
@@ -7,13 +7,13 @@ export default {
   name: "FavoriteButton",
   props: ["itemId"],
   methods: {
-    toggleFav() {
-      this.isFav ? this.$store.commit('removeFavorites', this.itemId) : this.$store.commit('setFavorites', this.itemId); 
+    toggleFav(id) {
+      this.isFav ? this.$store.commit('favoriteModule/removeFavorites', id) : this.$store.commit('favoriteModule/setFavorites', id); 
     }
   },
   computed: {
     isFav() {
-      return this.$store.state.favorites.includes(this.itemId)
+      return this.$store.state.favoriteModule.favorites.includes(this.itemId)
     }
   }, 
 }

@@ -63,9 +63,9 @@ export default {
   computed: {
     houses() {
       if (this.searchInput === "") {
-        return this.$store.state.houses
+        return this.$store.state.housesModule.houses
       } else {
-        return this.$store.state.houses.filter((house) => {
+        return this.$store.state.housesModule.houses.filter((house) => {
           return (
             house.location.street.toLowerCase().includes(this.searchInput.toLowerCase()) ||
             house.location.city.toLowerCase().includes(this.searchInput.toLowerCase()) ||
@@ -82,7 +82,7 @@ export default {
   },
 
   created() {
-    this.$store.dispatch('fetchHouses');
+    this.$store.dispatch('housesModule/fetchHouses');
   }
 }
 </script>

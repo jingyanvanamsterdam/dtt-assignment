@@ -28,7 +28,7 @@ export default {
       return parseInt(this.$route.params.id)
     },
     house() {
-      const houses = this.$store.state.houses
+      const houses = this.$store.state.housesModule.houses
       const theHouse = houses.find(house => house.id === this.houseId)
       return theHouse ? theHouse : null
     },
@@ -59,7 +59,7 @@ export default {
   },
 
   created() {
-    this.$store.dispatch('fetchHouses');
+    this.$store.dispatch('housesModule/fetchHouses');
   },
 
   methods: {

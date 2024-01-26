@@ -6,15 +6,12 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   name: 'Sorting',
   methods: {
-    sortByPrice() {
-      this.$store.commit("sortByPrice")
-    },
-    sortBySize() {
-      this.$store.commit("sortBySize")
-    },
+    ...mapMutations('housesModule',['sortByPrice', 'sortBySize'])
   }
 }
 </script>

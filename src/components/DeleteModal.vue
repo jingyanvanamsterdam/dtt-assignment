@@ -9,7 +9,7 @@
       <p>Are you sure you want to delete this listing?</p>
       <p>This action cannot be undone. </p>
       <br>
-      <button class="button-yes" @click.prevent.stop="handleDelete">YES, DELETE</button>
+      <button class="button-yes" @click.prevent.stop="handleDelete(itemId)">YES, DELETE</button>
       <button class="button-goback" @click.prevent.stop="cancel">GO BACK</button>
       <!--move methods from HomePage and House Detail to DeleteModal because in HomePage, showModal's value is linked to every item which is deletable and it always delete the last item on the screen-->
     </div>
@@ -31,10 +31,10 @@ export default {
     cancel() {
       this.isVisible = false
     },
-    handleDelete(event) {
-      HTTP.delete(`houses/${this.itemId}`).then(() => {
+    handleDelete(id) {
+      HTTP.delete(`houses/${id}`).then(() => {
         //To make the store change the state and then render, because the router is going to the home view and it needed to be informed the state is changed. 
-        this.$store.commit("deleteListing", this.itemId);
+        this.$store.commit("houseModule/deleteListing", id);
         this.$router.replace('/')
       }).catch((error) => {
         console.log('error', error)
