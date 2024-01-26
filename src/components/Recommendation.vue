@@ -16,7 +16,7 @@ export default {
   },
   computed: {
     recommendation() {
-      const houses = this.$store.state.houses
+      const houses = this.$store.state.housesModule.houses
       const recommendation = [];
       //When the house detail page is refreshed/rerendered, houses can be empty, it will make the page crash. Therefore, while condition to make sure houses.length > 0. 
       while (houses.length > 0 && recommendation.length < 3) {
