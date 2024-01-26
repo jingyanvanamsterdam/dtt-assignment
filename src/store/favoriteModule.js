@@ -1,5 +1,5 @@
 export const favoriteModule = {
-  namespace: true,
+  namespaced: true,
   state: () => {
     return {
       favorites: JSON.parse(localStorage.getItem('favorites')) || []

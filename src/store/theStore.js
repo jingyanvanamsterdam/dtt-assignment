@@ -3,6 +3,9 @@ import { housesModule } from "./housesModule";
 import { favoriteModule } from "./favoriteModule";
 
 export const useHouseStore = createStore({
-  housesModule,
-  favoriteModule
+  modules: {
+    housesModule,
+    favoriteModule
+  }
+
 })

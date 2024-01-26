@@ -1,7 +1,7 @@
 import { HTTP } from "@/HTTP";
 
 export const housesModule = {
-  namespace: true, 
+  namespaced: true, 
   state: () => {
     return {
       houses: [],
